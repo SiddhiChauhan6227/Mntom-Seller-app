@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "583082649082",
+    "project_id": "mntom-b9f31",
+    "storage_bucket": "mntom-b9f31.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583082649082:android:9ef84d7c6cd148ccfa7043",
+        "android_client_info": {
+          "package_name": "com.mntom.seller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0Nu54AuQuJb8iZcj7eFBeteO4AkYQXk0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
