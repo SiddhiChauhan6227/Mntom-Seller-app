@@ -53,8 +53,19 @@ final Uri sendDigitalProductMailApi =
     Uri.parse("${baseUrl}send_digital_product_mail");
 final Uri getPickUpLocationApi = Uri.parse("${baseUrl}get_pickup_locations");
 final Uri addPickUpLocationApi = Uri.parse("${baseUrl}add_pickup_location");
-final Uri createShipRocketOrderApi =
-    Uri.parse("${baseUrl}create_shiprocket_order");
+
+////////// OTO ///////////
+final Uri createOtoOrderApi = Uri.parse("${baseUrl}create_oto_order");
+final Uri cancelOtoOrderApi = Uri.parse("${baseUrl}cancel_oto_order");
+final Uri downloadAwbApi = Uri.parse("${baseUrl}download_awb");
+final Uri getOtoOrderDetailsApi = Uri.parse("${baseUrl}get_oto_order_details");
+final Uri createOtoShipmentApi = Uri.parse("${baseUrl}create_oto_shipment");
+final Uri updateOtoshipmentDetails =
+    Uri.parse("${baseUrl}update_oto_shipment_details");
+final Uri cancelOtoshipment = Uri.parse("${baseUrl}cancel_oto_shipment");
+final Uri getWafeqOrderInvoiceUrl =
+    Uri.parse("${baseUrl}get_wafeq_order_invoice");
+
 final Uri generateAWBApi = Uri.parse("${baseUrl}generate_awb");
 final Uri sendPickUpRequestApi = Uri.parse("${baseUrl}send_pickup_request");
 final Uri cancelShipRocketOrderApi =
@@ -63,9 +74,10 @@ final Uri generateLabelApi = Uri.parse("${baseUrl}generate_label");
 final Uri downloadLabelApi = Uri.parse("${baseUrl}download_label");
 final Uri generateInvoiceApi = Uri.parse("${baseUrl}generate_invoice");
 final Uri downloadInvoiceApi = Uri.parse("${baseUrl}download_invoice");
-final Uri shipRocketOrderTrackingApi =
-    Uri.parse("${baseUrl}shiprocket_order_tracking");
+final Uri otoOrderTrackingApi = Uri.parse("${baseUrl}oto_order_tracking");
 final Uri getShipRocketOrderApi = Uri.parse("${baseUrl}get_shiprocket_order");
+final Uri addOtoStoreApi = Uri.parse("${baseUrl}add_oto_store");
+final Uri getOtoStoreApi = Uri.parse("${baseUrl}get_oto_store");
 
 //
 

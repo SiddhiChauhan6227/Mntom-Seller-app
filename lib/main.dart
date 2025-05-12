@@ -13,6 +13,8 @@ import 'package:sellermultivendor/Provider/brandProvider.dart';
 import 'package:sellermultivendor/Provider/faqProvider.dart';
 import 'package:sellermultivendor/Provider/pickUpLocationProvider.dart';
 import 'package:sellermultivendor/Repository/chatRepository.dart';
+import 'package:sellermultivendor/bloc/OtoStore/otostore_bloc.dart';
+import 'package:sellermultivendor/bloc/OtoStore/otostore_event.dart';
 import 'package:sellermultivendor/cubits/groupConverstationsCubit.dart';
 import 'package:sellermultivendor/cubits/personalConverstationsCubit.dart';
 import 'package:sellermultivendor/firebase_options.dart';
@@ -181,7 +183,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
             create: (_) => PersonalConverstationsCubit(ChatRepository())),
         BlocProvider(create: (_) => GroupConversationsCubit(ChatRepository())),
-      ],
+        BlocProvider(create: (_) => OtoStoreBloc()), ],
       child: MaterialApp(
         title: title,
         theme: ThemeData(

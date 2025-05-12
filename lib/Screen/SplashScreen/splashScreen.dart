@@ -42,10 +42,10 @@ class _SplashScreenState extends State<SplashScreen> {
           Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: DesignConfiguration.back(),
+            // decoration: DesignConfiguration.back(),
             child: Center(
               child: SvgPicture.asset(
-                DesignConfiguration.setSvgPath('splashlogo'),
+                DesignConfiguration.setPngPath('splashlogo'),
                 height: 250,
                 width: 150,
               ),

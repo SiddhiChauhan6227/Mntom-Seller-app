@@ -275,8 +275,12 @@ const String PARCEL_WEIGHT = 'parcel_weight';
 const String PARCEL_HEIGHT = 'parcel_height';
 const String PARCEL_BREADTH = 'parcel_breadth';
 const String PARCEL_LENGTH = 'parcel_length';
+const String WAREHOUSE_CITY = 'warehouse_city';
+const String OTO_STORE_ID = 'oto_store_id';
 const String OTO_ORDER_ID = 'oto_order_id';
 const String SHIPMENT_ID = 'shipment_id';
+const String DELIVERY_COMPANY_ID = 'delivery_company_id';
+
 const String COURIER_COMPANY_ID = 'courier_company_id';
 const String AWB_CODE = 'awb_code';
 const String PICKUP_STATUS = 'pickup_status';

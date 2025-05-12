@@ -33,6 +33,12 @@ class OrderIteam extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Order_Model model = orderListProvider!.orderList[index];
+
+    if (model.id == null) {
+      return Center(
+        child: CircularProgressIndicator(), // Show loading indicator
+      );
+    }
     Color back;
 
     if ((model.itemList![0].activeStatus!) == DELIVERD) {
@@ -292,33 +298,32 @@ class OrderIteam extends StatelessWidget {
             ],
           ),
           onTap: () async {
-            await Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => OrderDetail(
-                  id: model.id,
-                  update: update,
-                ),
-              ),
-            ) /* .then(
-              (value) {
-                orderListProvider!.initializeAllVariable();
-                orderListProvider!.scrollOffset = 0;
-                Future.delayed(
-                  Duration.zero,
-                  () {
-                    orderListProvider!.appBarTitle = Text(
-                      getTranslated(context, "Orders")!,
-                      style: const TextStyle(color: grad2Color),
-                    );
-                  },
-                );
+            final id = model.id; // Store the current value of model.id locally
 
-                orderListProvider!.getOrder(update, context);
-                update();
-              },
-            ) */
-                ;
+            print("jsfjvmc ${model.id}");
+            if (model.id == null) {
+              // Show a message to the user or do nothing
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Order details are not available at the moment."),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+              return; // Stop further execution
+            }else {
+              await Future.delayed(
+                  Duration(milliseconds: 25)); // Optional delay
+              await Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) =>
+                      OrderDetail(
+                        id: id,
+                        update: update,
+                      ),
+                ),
+              );
+            }
           },
         ),
       ),

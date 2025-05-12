@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:external_path/external_path.dart';
 import 'package:flutter/cupertino.dart';
@@ -105,6 +106,9 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
   List<PersonModel> searchList = [];
   int? selectedDelBoy;
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _warehouseController = TextEditingController();
+  final TextEditingController _warehouseCityController =
+      TextEditingController();
   late StateSetter delBoyState;
   bool fabIsVisible = true;
   String? curSelectedStatus;
@@ -114,11 +118,21 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<OrderTrackingModel> orderTrackingList = [];
   String? pickUpStatus;
+  String? warehouseCity = "";
+  String? warehouseName = "";
+  String? inVoiceId = "";
+  String? otoStoreId = "";
+  String? shipmentId = "";
+  String? otoOrderId = "";
+  String? delievryCompanyId = "";
+  String? isCancelledOrder = "";
+  String? isCancelledShipment = "";
 
   @override
   void initState() {
     getDeliveryBoy();
-    Future.delayed(Duration.zero, getOrderDetail);
+    getOrderDetail();
+    getOtoOrderDetail();
     getOrderTrackingData();
     super.initState();
     controller = ScrollController();
@@ -199,6 +213,11 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
       ApiBaseHelper().postAPICall(getOrdersApi, parameter).then(
         (getdata) async {
           bool error = getdata["error"];
+          otoStoreId = getdata['oto_store_id'];
+          warehouseCity = getdata['warehouse_city'];
+          warehouseName = getdata['warehouse_name'];
+          inVoiceId = getdata['data'][0]['invoice_id'];
+          print("imddmsl $inVoiceId");
           if (!error) {
             var data = getdata["data"];
             tempList.clear();
@@ -284,6 +303,52 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
               messageController.text =
                   'Hello Dear ${tempList[0].username},\nYou have purchase our digital product and we are happy to share the product with you, you can get product with this mail attachment.\nThank You ...!';
             } else {}
+            setState(
+              () {
+                isLoading = false;
+              },
+            );
+          } else {}
+        },
+        onError: (error) {
+          setSnackbar(
+            error.toString(),
+            context,
+          );
+        },
+      );
+    } else {
+      if (mounted) {
+        setState(
+          () {
+            isNetworkAvail = false;
+          },
+        );
+      }
+    }
+
+    return;
+  }
+
+  Future<void> getOtoOrderDetail() async {
+    isNetworkAvail = await isNetworkAvailable();
+    if (isNetworkAvail) {
+      context.read<SettingProvider>().CUR_USERID = await getPrefrence(Id);
+      var parameter = {
+        SellerId: context.read<SettingProvider>().CUR_USERID,
+        'order_id': widget.id,
+      };
+      ApiBaseHelper().postAPICall(getOtoOrderDetailsApi, parameter).then(
+        (getdata) async {
+          bool error = getdata["error"];
+
+          if (!error) {
+            shipmentId = getdata["data"][0]['shipment_id'];
+            otoOrderId = getdata["data"][0]['oto_order_id'];
+            delievryCompanyId = getdata["data"][0]['delivery_company_id'];
+            isCancelledOrder= getdata["data"][0]['is_canceled'];
+            isCancelledShipment= getdata["data"][0]['is_shipment_canceled'];
+
             setState(
               () {
                 isLoading = false;
@@ -515,7 +580,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
               children: [
                 isLoading
                     ? const ShimmerEffect()
-                    : Column(
+                    : model != null ?Column(
                         children: [
                           GradientAppBar(
                             getTranslated(context, "ORDER_DETAIL")!,
@@ -586,62 +651,65 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                           )
                                         : Container(),
 
-                                    if (model!.itemList![0].productType !=
-                                        'digital_product')
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.only(
-                                                  top: 10),
-                                          child: InkWell(
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: selectPickUpLocation !=
-                                                          null
-                                                      ? primary
-                                                      : grey,
-                                                ),
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(
-                                                      circularBorderRadius5),
-                                                ),
-                                              ),
-                                              padding: const EdgeInsets.all(10),
-                                              child: Text(
-                                                getTranslated(
-                                                  context,
-                                                  'Create oto Order',
-                                                )!,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall!
-                                                    .copyWith(
-                                                      color:
-                                                          selectPickUpLocation !=
-                                                                  null
-                                                              ? primary
-                                                              : grey,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          flex: 10, // Assign flex 10 to Create oto Order
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 10),
+                                            child: Padding(
+                                              padding: const EdgeInsetsDirectional.only(top: 0),
+                                              child: InkWell(
+                                                child: Container(
+                                                  // height: 50,
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color: primary,
                                                     ),
+                                                    borderRadius: const BorderRadius.all(
+                                                      Radius.circular(circularBorderRadius5),
+                                                    ),
+                                                  ),
+                                                  padding: const EdgeInsets.all(10),
+                                                  child: Text(
+                                                    getTranslated(
+                                                      context,
+                                                      'Create oto Order',
+                                                    )!,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .copyWith(
+                                                      color: primary,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                                onTap: () {
+                                                  createOtoParcelDialog();
+                                                },
                                               ),
                                             ),
-                                            onTap: () {
-                                              if (selectPickUpLocation !=
-                                                  null) {
-                                                createShipRocketParcelDialog();
-                                              }
-                                            },
                                           ),
                                         ),
-                                      ),
+                                        Flexible(
+                                          flex: 2, // Assign flex 1 to CommonRowBtnPng
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional.only(start: 10.0),
+                                            child: CommonRowBtnPng(
+                                              title: 'Download',
+                                              onBtnSelected: () {
+                                                downloadWafawiq();
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
 
                                     //item's here
                                     model!.itemList![0].productType ==
@@ -1149,51 +1217,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                 children: [
                                                   if (pickUpLocationList[j] !=
                                                       "")
-                                                    if (model!.itemList![0]
-                                                            .productType !=
-                                                        'digital_product')
-                                                      Row(
-                                                        children: [
-                                                          trackingModel == null
-                                                              ? IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    setState(
-                                                                        () {
-                                                                      selectPickUpLocation =
-                                                                          pickUpLocationList[
-                                                                              j];
-                                                                    });
-                                                                  },
-                                                                  icon: selectPickUpLocation ==
-                                                                          pickUpLocationList[
-                                                                              j]
-                                                                      ? const Icon(
-                                                                          Icons
-                                                                              .check_circle_sharp,
-                                                                        )
-                                                                      : const Icon(
-                                                                          Icons
-                                                                              .circle_outlined,
-                                                                        ))
-                                                              : Container(
-                                                                  height: 40,
-                                                                ),
-                                                          Text(
-                                                              "${getTranslated(context, 'PickUp Location')} : ",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .labelMedium!
-                                                                  .copyWith(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700)),
-                                                          Text(
-                                                              pickUpLocationList[
-                                                                  j]),
-                                                        ],
-                                                      ),
+
                                                   if (model!.itemList![0]
                                                           .productType !=
                                                       'digital_product')
@@ -1204,25 +1228,36 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                             child: Row(
                                                                 children: [
                                                                   Container(
-                                                                      decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              5),
-                                                                          color:
-                                                                              primary),
-                                                                      padding:
-                                                                          const EdgeInsets
-                                                                              .all(
-                                                                              7),
-                                                                      child: Text(
-                                                                          trackingModel.isCanceled == "1"
-                                                                              ? getTranslated(context,
-                                                                                  'Order Canceled')!
-                                                                              : getTranslated(context,
-                                                                                  'Order Created')!,
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: white))),
+                                                                    decoration: BoxDecoration(
+                                                                      borderRadius: BorderRadius.circular(5),
+                                                                      color: (() {
+                                                                        // Set background color based on cancellation condition
+                                                                        if (isCancelledOrder == "1" || isCancelledShipment == "1") {
+                                                                          return Colors.red; // Red color for "Cancelled"
+                                                                        } else {
+                                                                          return primary; // Default color
+                                                                        }
+                                                                      })(),
+                                                                    ),
+                                                                    padding: const EdgeInsets.all(7),
+                                                                    child: Text(
+                                                                      (() {
+                                                                        if (isCancelledOrder == "1") {
+                                                                          return getTranslated(context, 'Order Cancelled')!;
+                                                                        } else if (isCancelledShipment == "1" && isCancelledOrder == "0") {
+                                                                          return getTranslated(context, 'Shipment Cancelled')!;
+                                                                        } else if (otoOrderId != ""&& shipmentId == "") {
+                                                                          return getTranslated(context, 'Order Created')!;
+                                                                        }  else if (shipmentId != "") {
+                                                                          return getTranslated(context, 'Shipment created')!;
+                                                                        }
+                                                                        else {
+                                                                          return getTranslated(context, 'Shipment Created')!;
+                                                                        }
+                                                                      })(),
+                                                                      style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white),
+                                                                    ),
+                                                                  ),
                                                                   // if (trackingModel
                                                                   //             .shipmentId !=
                                                                   //         "" &&
@@ -1268,29 +1303,65 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                                   //           // });
                                                                   //         }),
                                                                   //   ),
-                                                                  if (trackingModel
-                                                                              .isCanceled ==
-                                                                          "0" &&
-                                                                      trackingModel
-                                                                              .awbCode !=
-                                                                          "")
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .only(
-                                                                          start:
-                                                                              10.0),
-                                                                      child: CommonRowBtn(
-                                                                          title: 'Cancel order',
-                                                                          onBtnSelected: () {
-                                                                            commonDialogue(context,
-                                                                                getTranslated(context, 'Do you want to cancel order?')!,
-                                                                                () {
-                                                                                  cancelOtoOrder(trackingModel!.shiprocketOrderId!, pickUpOrderItemsIds);
 
-                                                                              Routes.pop(context);
-                                                                            });
-                                                                          }),
-                                                                    ),
+                                                                    shipmentId ==
+                                                                            "" && otoOrderId !=""
+                                                                        ? Padding(
+                                                                            padding:
+                                                                                const EdgeInsetsDirectional.only(start: 10.0),
+                                                                            child: CommonRowBtn(
+                                                                                title: 'Send pickup request',
+                                                                                onBtnSelected: () {
+                                                                                  commonDialogue(context, getTranslated(context, 'Do you want to create shippment?')!, () {
+                                                                                    createOtoShipment();
+
+                                                                                    Routes.pop(context);
+                                                                                  });
+                                                                                }),
+                                                                          )
+                                                                        : const SizedBox
+                                                                            .shrink(),
+                                                                  otoOrderId !=
+                                                                      "" && isCancelledOrder == "0"
+                                                                      ? Padding(
+                                                                    padding: const EdgeInsetsDirectional
+                                                                        .only(
+                                                                        start:
+                                                                            10.0),
+                                                                    child: CommonRowBtn(
+                                                                        title: 'Cancel order',
+                                                                        onBtnSelected: () {
+                                                                          commonDialogue(
+                                                                              context,
+                                                                              getTranslated(context, 'Do you want to cancel order?')!,
+                                                                              () {
+                                                                            cancelOtoOrder();
+
+                                                                            Routes.pop(context);
+                                                                          });
+                                                                        }),
+                                                                  ):SizedBox.shrink(),
+                                                                  shipmentId !=
+                                                                      ""&& isCancelledShipment == "0"
+                                                                      ? Padding(
+                                                                    padding: const EdgeInsetsDirectional
+                                                                        .only(
+                                                                        start:
+                                                                            10.0),
+                                                                    child: CommonRowBtnPng(
+                                                                        title: 'Cancel shipment',
+                                                                        onBtnSelected: () {
+                                                                          print("fhksdn ");
+                                                                          commonDialogue(
+                                                                              context,
+                                                                              getTranslated(context, 'Do you want to cancel shipment?')!,
+                                                                              () {
+                                                                                cancelOtoShipment();
+
+                                                                            Routes.pop(context);
+                                                                          });
+                                                                        }),
+                                                                  ):SizedBox.shrink(),
                                                                   // if (trackingModel
                                                                   //             .labelUrl ==
                                                                   //         "" &&
@@ -1314,78 +1385,36 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                                   //           // });
                                                                   //         }),
                                                                   //   ),
-                                                                  if (trackingModel
-                                                                              .labelUrl !=
-                                                                          "" &&
-                                                                      trackingModel
-                                                                              .awbCode !=
-                                                                          "")
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .only(
-                                                                          start:
-                                                                              10.0),
-                                                                      child: CommonRowBtn(
-                                                                          title: 'Download label',
-                                                                          onBtnSelected: () {
-                                                                            downloadLabel(trackingModel!.shipmentId!);
-                                                                          }),
-                                                                    ),
-                                                                  if (trackingModel
-                                                                              .invoiceUrl ==
-                                                                          "" &&
-                                                                      trackingModel
-                                                                              .awbCode !=
-                                                                          "")
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .only(
-                                                                          start:
-                                                                              10.0),
-                                                                      child: CommonRowBtn(
-                                                                          title: 'Generate invoice',
-                                                                          onBtnSelected: () {
-                                                                            commonDialogue(context,
-                                                                                getTranslated(context, 'Do you want to generate invoice?')!,
-                                                                                () {
-                                                                              generateInvoice();
 
-                                                                              Routes.pop(context);
-                                                                            });
-                                                                          }),
-                                                                    ),
-                                                                  if (trackingModel
-                                                                              .invoiceUrl !=
-                                                                          "" &&
-                                                                      trackingModel
-                                                                              .awbCode !=
-                                                                          "")
+
+                                                                  if (shipmentId !=
+                                                                      ""
+                                                                      )
                                                                     Padding(
                                                                       padding: const EdgeInsetsDirectional
                                                                           .only(
                                                                           start:
                                                                               10.0),
-                                                                      child: CommonRowBtn(
-                                                                          title: 'Download invoice',
+                                                                      child: CommonRowBtnPng(
+                                                                          title: 'Download AWB',
                                                                           onBtnSelected: () {
-                                                                            downloadInvoice(trackingModel!.shipmentId!);
+                                                                            // getWafeqOrderInvoice();
+                                                                            downloadAwb();
+                                                                            // downloadInvoice(trackingModel!.shipmentId!);
                                                                           }),
                                                                     ),
-                                                                  if (trackingModel
-                                                                              .shipmentId !=
-                                                                          "" &&
-                                                                      trackingModel
-                                                                              .awbCode !=
-                                                                          "")
+                                                                  if (shipmentId !=
+                                                                      ""
+                                                                      )
                                                                     Padding(
                                                                       padding: const EdgeInsetsDirectional
                                                                           .only(
                                                                           start:
                                                                               10.0),
-                                                                      child: CommonRowBtn(
+                                                                      child: CommonRowBtnPng(
                                                                           title: 'Tracking',
                                                                           onBtnSelected: () {
-                                                                            shipRocketOrderTracking(trackingModel!.awbCode!);
+                                                                            otoOrderTracking();
                                                                           }),
                                                                     ),
                                                                 ]),
@@ -1503,7 +1532,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                             ),
                           ),
                         ],
-                      ),
+                      ):CircularProgressIndicator(),
                 DesignConfiguration.showCircularProgress(isProgress, primary),
               ],
             )
@@ -1516,7 +1545,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
     );
   }
 
-  Future<void> createShipRocketParcelDialog() async {
+  Future<void> createOtoParcelDialog() async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -1550,20 +1579,24 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 0),
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: primary)),
-                          child: Text(
-                            getTranslated(context,
-                                "Note: Make your pickup location associated with the order is verified from oto Dashboard and then in admin panel . If it is not verified you will not be able to generate AWB later on.")!,
-                            style: Theme.of(this.context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(),
-                          ),
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "${getTranslated(context, "Warehouse")!} : ",
+                              style: Theme.of(this.context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            Expanded(
+                              child: Text("$warehouseName ",
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: textFontSize16,
+                                  )),
+                            )
+                          ],
                         ),
                       ),
                       Padding(
@@ -1571,19 +1604,19 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                         child: Row(
                           children: [
                             Text(
-                              "${getTranslated(context, "PickUp Location")!} : ",
+                              "${getTranslated(context, "Warehouse City")!} : ",
                               style: Theme.of(this.context)
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(fontWeight: FontWeight.w600),
                             ),
-                            Text(
-                              selectPickUpLocation!,
-                              style: Theme.of(this.context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(),
-                            ),
+                            Expanded(
+                              child: Text("$warehouseCity ",
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: textFontSize16,
+                                  )),
+                            )
                           ],
                         ),
                       ),
@@ -1674,33 +1707,28 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
           SellerId: context.read<SettingProvider>().CUR_USERID,
           UserId: model!.userId,
           ORDER_ID: model!.id,
-          PICKUP_LOCATION: selectPickUpLocation,
           PARCEL_WEIGHT: weightC.toString(),
           PARCEL_HEIGHT: heightC.toString(),
           PARCEL_BREADTH: breadthC.toString(),
-          PARCEL_LENGTH: lengthC.toString()
+          PARCEL_LENGTH: lengthC.toString(),
+          OTO_STORE_ID: otoStoreId,
+          WAREHOUSE_CITY: warehouseCity
         };
 
-        ApiBaseHelper().postAPICall(createShipRocketOrderApi, parameter).then(
+        ApiBaseHelper().postAPICall(createOtoOrderApi, parameter).then(
           (getdata) async {
             bool error = getdata["error"];
             String msg = getdata["message"];
-          if(getdata["data"]['success']==true){
-            int otoIdFrom = getdata["data"]['otoId'];
-            setPrefrence(OtoId, otoIdFrom.toString());
-            print("OTO ID FROM OTO ORDER $otoIdFrom");
-          }
+
 
             setSnackbar(
               msg,
               context,
             );
+            print("dghbjnkm $error");
             if (!error) {
-              Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                    builder: (BuildContext context) => super.widget),
-              );
+              print("dghbjnkmd  $error");
+              getOtoOrderDetail();
               // getOrderTrackingData();
             } else {}
             setState(() {
@@ -1897,8 +1925,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
   //   }
   // }
 
-  Future<void> cancelOtoOrder(
-      String shipmentOrderId, List<String> ids) async {
+  Future<void> cancelOtoOrder() async {
     isNetworkAvail = await isNetworkAvailable();
 
     if (isNetworkAvail) {
@@ -1906,13 +1933,13 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
         setState(() {
           isProgress = true;
         });
-        String? OtoIdFrom= await    getPrefrence(OtoId);
+        String? OtoIdFrom = await getPrefrence(OtoId);
         print("ghr;gh $OtoIdFrom");
         var parameter = {
-          OTO_ORDER_ID: OtoIdFrom,
+          OTO_ORDER_ID: otoOrderId,
         };
 
-        ApiBaseHelper().postAPICall(cancelShipRocketOrderApi, parameter).then(
+        ApiBaseHelper().postAPICall(cancelOtoOrderApi, parameter).then(
           (getdata) async {
             bool error = getdata["error"];
             String msg = getdata["message"];
@@ -1921,11 +1948,201 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
               context,
             );
             if (!error) {
-              Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                    builder: (BuildContext context) => super.widget),
-              );
+              getOtoOrderDetail();
+             setSnackbar(msg, context);
+              /*for (int i = 0; i < tempList[0].itemList!.length; i++) {
+                if (ids.contains(tempList[0].itemList![i].id)) {
+                  setState(() {
+                    tempList[0].itemList![i].status = 'cancelled';
+                  });
+                }
+              }*/
+            } else {}
+            setState(() {
+              isProgress = false;
+            });
+          },
+          onError: (error) {
+            setSnackbar(
+              error.toString(),
+              context,
+            );
+          },
+        );
+      } on TimeoutException catch (_) {
+        setSnackbar(
+          getTranslated(context, "somethingMSg")!,
+          context,
+        );
+      }
+    } else {
+      setState(
+        () {
+          isNetworkAvail = false;
+        },
+      );
+    }
+  }
+  Future<void> cancelOtoShipment() async {
+    isNetworkAvail = await isNetworkAvailable();
+
+    if (isNetworkAvail) {
+      try {
+        setState(() {
+          isProgress = true;
+        });
+        String? OtoIdFrom = await getPrefrence(OtoId);
+        print("ghr;gh $OtoIdFrom");
+        var parameter = {
+          OTO_ORDER_ID: otoOrderId,
+          "oto_shipment_id":shipmentId
+        };
+
+        ApiBaseHelper().postAPICall(cancelOtoshipment, parameter).then(
+          (getdata) async {
+            bool error = getdata["error"];
+            String msg = getdata["message"];
+            setSnackbar(
+              msg,
+              context,
+            );
+            if (!error) {
+            getOtoOrderDetail();
+              /*for (int i = 0; i < tempList[0].itemList!.length; i++) {
+                if (ids.contains(tempList[0].itemList![i].id)) {
+                  setState(() {
+                    tempList[0].itemList![i].status = 'cancelled';
+                  });
+                }
+              }*/
+            } else {}
+            setState(() {
+              isProgress = false;
+            });
+          },
+          onError: (error) {
+            setSnackbar(
+              error.toString(),
+              context,
+            );
+          },
+        );
+      } on TimeoutException catch (_) {
+        setSnackbar(
+          getTranslated(context, "somethingMSg")!,
+          context,
+        );
+      }
+    } else {
+      setState(
+        () {
+          isNetworkAvail = false;
+        },
+      );
+    }
+  }
+
+  Future<void> createOtoShipment() async {
+    isNetworkAvail = await isNetworkAvailable();
+
+    if (isNetworkAvail) {
+      try {
+        setState(() {
+          isProgress = true;
+        });
+        var parameter = {
+          OTO_ORDER_ID: otoOrderId,
+          DELIVERY_COMPANY_ID: delievryCompanyId
+        };
+
+        ApiBaseHelper().postAPICall(createOtoShipmentApi, parameter).then(
+          (getdata) async {
+            bool error = getdata["error"];
+            String msg = getdata["message"];
+            setSnackbar(
+              msg,
+              context,
+            );
+            if (!error) {
+              var parameter = {
+                OTO_ORDER_ID: otoOrderId,
+              };
+              ApiBaseHelper().postAPICall(updateOtoshipmentDetails, parameter)
+                  .then((onValue)async{
+                bool error = getdata["error"];
+                String msg = getdata["message"];
+                setSnackbar(
+                  msg,
+                  context,
+                );
+                if(!error){
+                  getOtoOrderDetail();
+                }
+              });
+
+
+
+              /*for (int i = 0; i < tempList[0].itemList!.length; i++) {
+                if (ids.contains(tempList[0].itemList![i].id)) {
+                  setState(() {
+                    tempList[0].itemList![i].status = 'cancelled';
+                  });
+                }
+              }*/
+            } else {}
+            setState(() {
+              isProgress = false;
+            });
+          },
+          onError: (error) {
+            setSnackbar(
+              error.toString(),
+              context,
+            );
+          },
+        );
+      } on TimeoutException catch (_) {
+        setSnackbar(
+          getTranslated(context, "somethingMSg")!,
+          context,
+        );
+      }
+    } else {
+      setState(
+        () {
+          isNetworkAvail = false;
+        },
+      );
+    }
+  }
+  Future<void> getWafeqOrderInvoice() async {
+    isNetworkAvail = await isNetworkAvailable();
+
+    if (isNetworkAvail) {
+      try {
+        setState(() {
+          isProgress = true;
+        });
+        var parameter = {
+          "invoice_id": inVoiceId,
+        };
+
+        ApiBaseHelper().postAPICall(getWafeqOrderInvoiceUrl, parameter).then(
+          (getdata) async {
+            bool error = getdata["error"];
+            String msg = getdata["message"];
+            setSnackbar(
+              msg,
+              context,
+            );
+            if (!error) {
+
+
+              // Navigator.pushReplacement(
+              //   context,
+              //   CupertinoPageRoute(
+              //       builder: (BuildContext context) => super.widget),
+              // );
               /*for (int i = 0; i < tempList[0].itemList!.length; i++) {
                 if (ids.contains(tempList[0].itemList![i].id)) {
                   setState(() {
@@ -2117,8 +2334,8 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
         setState(() {
           isProgress = true;
         });
-     String? OtoIdFrom= await    getPrefrence(OtoId);
-     print("ghr;gh $OtoIdFrom");
+        String? OtoIdFrom = await getPrefrence(OtoId);
+        print("ghr;gh $OtoIdFrom");
 
         var parameter = {
           OTO_ORDER_ID: OtoIdFrom,
@@ -2170,7 +2387,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> downloadInvoice(String shipmentId) async {
+  Future<void> downloadAwb() async {
     isNetworkAvail = await isNetworkAvailable();
 
     if (isNetworkAvail) {
@@ -2179,10 +2396,13 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
           isProgress = true;
         });
         var parameter = {
-          SHIPMENT_ID: shipmentId,
+          OTO_ORDER_ID: otoOrderId,
         };
+        // var parameter = {
+        //   'invoice_id': inVoiceId,
+        // };
 
-        ApiBaseHelper().postAPICall(downloadInvoiceApi, parameter).then(
+        ApiBaseHelper().postAPICall(downloadAwbApi, parameter).then(
           (getdata) async {
             bool error = getdata["error"];
             String msg = getdata["message"];
@@ -2191,14 +2411,14 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
               context,
             );
             if (!error) {
-              var data = getdata["data"];
-
-              final response = await get(
-                Uri.parse(data),
-              );
-              print("response invoice****${response.bodyBytes.toString()}");
-              Uint8List urldata = response.bodyBytes;
-              downloadInvoiceCode(urldata);
+              if (await canLaunchUrl(Uri.parse(getdata["data"]))) {
+                await launchUrl(Uri.parse(getdata["data"]));
+              } else {
+                throw 'Could not launch $url';
+              }
+              // print("response invoice****${getdata['data'].bodyBytes.toString()}");
+              // _downloadAndOpenPdf(getdata["data"]);
+              // downloadInvoiceCode(urldata);
             } else {}
             setState(() {
               isProgress = false;
@@ -2225,42 +2445,151 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
       );
     }
   }
+  Future<void> downloadWafawiq() async {
+    isNetworkAvail = await isNetworkAvailable();
 
-  downloadInvoiceCode(Uint8List url) async {
-    try {
-      final appDocDirPath = Platform.isAndroid
-          ? (await ExternalPath.getExternalStoragePublicDirectory(
-              ExternalPath.DIRECTORY_DOWNLOAD))
-          : (await getApplicationDocumentsDirectory()).path;
+    if (isNetworkAvail) {
+      try {
+        setState(() {
+          isProgress = true;
+        });
 
-      final targetFileName =
-          "${getTranslated(context, "eShop Seller - App")}-${getTranslated(context, "Invoice")}#${model!.id.toString()}.pdf";
+        var parameter = {
+          'invoice_id': inVoiceId,
+        };
 
-      File file = File("$appDocDirPath/$targetFileName");
+        ApiBaseHelper().postAPICall(getWafeqOrderInvoiceUrl, parameter).then(
+          (getdata) async {
+            bool error = getdata["error"];
+            String msg = getdata["message"];
+            setSnackbar(
+              msg,
+              context,
+            );
+            if (!error) {
 
-      // Write down the file as bytes from the bytes got from the HTTP request.
-      await file.writeAsBytes(url, flush: false);
-      await file.writeAsBytes(url);
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        action: SnackBarAction(
-          label: getTranslated(context, "Download Invoice")!,
-          onPressed: () {
-            OpenFilex.open(file.path);
+              // print("response invoice****${getdata['data'].bodyBytes.toString()}");
+              _downloadWafiq(getdata["data"]);
+              // downloadInvoiceCode(urldata);
+            } else {}
+            setState(() {
+              isProgress = false;
+            });
           },
+          onError: (error) {
+            setSnackbar(
+              error.toString(),
+              context,
+            );
+          },
+        );
+      } on TimeoutException catch (_) {
+        setSnackbar(
+          getTranslated(context, "somethingMSg")!,
+          context,
+        );
+      }
+    } else {
+      setState(
+        () {
+          isNetworkAvail = false;
+        },
+      );
+    }
+  }
+  Future<void> _downloadWafiq(base64Pdf) async {
+    try {
+      // Remove the prefix
+      final base64String = base64Pdf.split(",").last;
+
+      // Decode the Base64 String
+      final bytes = base64Decode(base64String);
+
+      // Get the Temporary Directory
+      final dir = await getTemporaryDirectory();
+
+      // Define the file path
+      final filePath = "${dir.path}/awb.pdf";
+
+      // Write the PDF file to the temporary directory
+      final file = File(filePath);
+      await file.writeAsBytes(bytes);
+
+      // Show success snackbar with the file path
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("PDF downloaded successfully: $filePath"),
+          duration: Duration(seconds: 5),
+          action: SnackBarAction(
+            label: "Open",
+            onPressed: () async {
+              // Open the PDF file when "Open" action is clicked
+              await OpenFilex.open(filePath);
+            },
+          ),
         ),
-        content: Text(
-          getTranslated(context, "Download Invoice Successfully")!,
-          softWrap: true,
-          style: const TextStyle(color: black),
+      );
+    } catch (e) {
+      // Show error snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Error: $e"),
+          duration: Duration(seconds: 5),
         ),
-        duration: const Duration(seconds: 5),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      ));
-    } catch (_) {}
+      );
+    }
   }
 
-  Future<void> shipRocketOrderTracking(String awbCode) async {
+
+  // Future<void> downloadInvoiceCode(Uint8List url) async {
+  //   try {
+  //     final appDocDirPath = Platform.isAndroid
+  //         ? await ExternalPath.getExternalStoragePublicDirectory(
+  //         ExternalPath.DIRECTORY_DOWNLOAD)
+  //         : (await getApplicationDocumentsDirectory()).path;
+  //
+  //     final targetFileName =
+  //         "${getTranslated(context, "eShop Seller - App")}-${getTranslated(context, "Invoice")}#${model!.id}.pdf";
+  //
+  //     final filePath = "$appDocDirPath/$targetFileName";
+  //
+  //     final file = File(filePath);
+  //
+  //     await file.writeAsBytes(url);
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text(
+  //           getTranslated(context, "Download Invoice Successfully")!,
+  //           softWrap: true,
+  //           style: const TextStyle(color: black),
+  //         ),
+  //         action: SnackBarAction(
+  //           label: getTranslated(context, "Open Invoice")!,
+  //           onPressed: () {
+  //             OpenFilex.open(filePath);
+  //           },
+  //         ),
+  //         duration: const Duration(seconds: 5),
+  //         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text(
+  //           "${getTranslated(context, "Failed to save invoice")!}: $e",
+  //           softWrap: true,
+  //           style: const TextStyle(color: Colors.white),
+  //         ),
+  //         backgroundColor: Colors.red,
+  //       ),
+  //     );
+  //   }
+  // }
+
+
+  Future<void> otoOrderTracking() async {
     isNetworkAvail = await isNetworkAvailable();
 
     if (isNetworkAvail) {
@@ -2269,10 +2598,10 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
           isProgress = true;
         });
         var parameter = {
-          AWB_CODE: awbCode,
+          OTO_ORDER_ID: otoOrderId,
         };
 
-        ApiBaseHelper().postAPICall(shipRocketOrderTrackingApi, parameter).then(
+        ApiBaseHelper().postAPICall(otoOrderTrackingApi, parameter).then(
           (getdata) async {
             bool error = getdata["error"];
             String msg = getdata["message"];

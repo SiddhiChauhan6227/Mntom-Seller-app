@@ -22,6 +22,7 @@ import '../../../main.dart';
 import '../../AddProduct/Add_Product.dart';
 import '../../Authentication/Login.dart';
 import '../../OrderList/OrderList.dart';
+import '../../OtoStore/oto_list.dart';
 import '../../ProductList/ProductList.dart';
 import '../../Profile/Profile.dart';
 import '../../StockManageMentScreen/StockManageMentList.dart';
@@ -78,6 +79,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             Icons.add_location_outlined),
         _getDrawerItem(getTranslated(context, 'Stock Management')!,
             Icons.add_box_outlined),
+        _getDrawerItem(getTranslated(context, 'Otostore')!,
+            Icons.home_filled),
         const Divider(),
         _getDrawerItem(
             getTranslated(context, "ChangeLanguage")!, Icons.translate),
@@ -378,6 +381,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               context,
               CupertinoPageRoute(
                 builder: (context) => StockManagementList(
+                  fromNavbar: false,
+                ),
+              ),
+            );
+          } else if (title == getTranslated(context, 'Otostore')) {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => const OtoStore(
                   fromNavbar: false,
                 ),
               ),
