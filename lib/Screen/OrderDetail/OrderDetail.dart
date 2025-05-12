@@ -1226,6 +1226,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                             scrollDirection:
                                                                 Axis.horizontal,
                                                             child: Row(
+
                                                                 children: [
                                                                   Container(
                                                                     decoration: BoxDecoration(

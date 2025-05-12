@@ -59,7 +59,7 @@ class CommonRowBtnPng extends StatelessWidget {
           alignment: Alignment.center,
           height: 30,
           width: 30,
-          fit: BoxFit.contain,
+          fit: BoxFit.cover,
         ),
       ),
       onTap: () {
