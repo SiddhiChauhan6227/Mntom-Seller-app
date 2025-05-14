@@ -78,8 +78,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     // demo
     setState(
       () {
-        mobileController.text = "9999999999";
-        passwordController.text = "12345678";
+        mobileController.text = "";
+        passwordController.text = "";
       },
     );
   }

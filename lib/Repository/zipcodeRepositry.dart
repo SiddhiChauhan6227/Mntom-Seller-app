@@ -15,3 +15,17 @@ class ZipcodeRepository {
     }
   }
 }
+class CityRepository {
+  // for add faqs.
+  static Future<Map<String, dynamic>> setCities() async {
+    try {
+      var parameter = {};
+      var citiesDetail =
+          await ApiBaseHelper().postAPICall(getCitiesApi, parameter);
+
+      return citiesDetail;
+    } on Exception {
+      throw ApiException('Something went wrong');
+    }
+  }
+}

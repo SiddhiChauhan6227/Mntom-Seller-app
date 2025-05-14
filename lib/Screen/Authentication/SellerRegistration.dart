@@ -9,9 +9,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:sellermultivendor/Model/Cities/cityModel.dart';
 import '../../Helper/ApiBaseHelper.dart';
 import '../../Helper/Color.dart';
 import '../../Helper/Constant.dart';
+import '../../Repository/zipcodeRepositry.dart';
 import '../../Widget/ButtonDesing.dart';
 import '../../Provider/settingProvider.dart';
 import '../../Widget/jwtkeySecurity.dart';
@@ -73,6 +75,9 @@ class _SellerRegisterState extends State<SellerRegister>
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   Animation? buttonSqueezeanimation;
   AnimationController? buttonController;
+  List <CityModel> cityLists = [];
+  String selectedCity = "";
+  String selectedCityId = "";
   ApiBaseHelper apiBaseHelper = ApiBaseHelper();
   final mobileController = TextEditingController();
   var addressProfFile,
@@ -121,11 +126,37 @@ class _SellerRegisterState extends State<SellerRegister>
         ),
       ),
     );
+    setCities();
   }
 
 //==============================================================================
 //============================= For API Call ==================================
+  Future<bool> setCities() async {
+    String errorMessage = "";
+    try {
 
+      var result = await CityRepository.setCities();
+      bool error = result['error'];
+      errorMessage = result['message'];
+      if (!error) {
+        var data = result['data'];
+        // if (fromAddProduct) {
+         cityLists = (data as List)
+              .map((data) => CityModel.fromJson(data))
+              .toList();
+        // } else {
+        //   editProvider!.zipSearchList.clear();
+        //   editProvider!.zipSearchList = (data as List)
+        //       .map((data) => ZipCodeModel.fromJson(data))
+        //       .toList();
+        // }
+      }
+      return error;
+    } catch (e) {
+      errorMessage = e.toString();
+      return true;
+    }
+  }
   Future<void> sellerRegisterAPI() async {
     isNetworkAvail = await isNetworkAvailable();
     if (isNetworkAvail) {
@@ -138,6 +169,7 @@ class _SellerRegisterState extends State<SellerRegister>
         request.fields[EmailText] = email!;
         request.fields[ConfirmPassword] = confirmpassword!;
         request.fields[Address] = address!;
+        request.fields[city] = selectedCityId!;
         if (addressProfFile != null) {
           final mimeType = lookupMimeType(addressProfFile.path);
           var extension = mimeType!.split("/");
@@ -428,6 +460,7 @@ class _SellerRegisterState extends State<SellerRegister>
                   setaddress(),
                   storeName(),
                   storeUrl(),
+                  cityList(),
                   setStoreDescription(),
                   taxName(),
                   taxNumber(),
@@ -439,7 +472,7 @@ class _SellerRegisterState extends State<SellerRegister>
                   uploadStoreLogo(getTranslated(context, "Store Logo")!, 1),
                   selectedMainImageShow(storeLogoFile),
                   uploadStoreLogo(
-                      getTranslated(context, "National Identity Card")!, 2),
+                      getTranslated(context, "Commercial register or self-employment document")!, 2),
                   selectedMainImageShow(nationalIdentityCardFile),
                   uploadStoreLogo(getTranslated(context, "Address Proof")!, 3),
                   selectedMainImageShow(addressProfFile),
@@ -465,22 +498,28 @@ class _SellerRegisterState extends State<SellerRegister>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
+          Expanded(
+            flex: 2,
+            child: Text(
+              title,
+            ),
           ),
           InkWell(
-            child: Container(
-              decoration: BoxDecoration(
-                color: primary,
-                borderRadius: BorderRadius.circular(circularBorderRadius5),
-              ),
-              width: 90,
-              height: 40,
-              child: Center(
-                child: Text(
-                  getTranslated(context, "Upload")!,
-                  style: const TextStyle(
-                    color: white,
+            child: Expanded(
+              flex: 10,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(circularBorderRadius5),
+                ),
+                width: 90,
+                height: 40,
+                child: Center(
+                  child: Text(
+                    getTranslated(context, "Upload")!,
+                    style: const TextStyle(
+                      color: white,
+                    ),
                   ),
                 ),
               ),
@@ -1073,6 +1112,79 @@ class _SellerRegisterState extends State<SellerRegister>
       ),
     );
   }
+  cityList() {
+    print("LIST OF CITY ${cityLists.length}");
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.90,
+      padding: const EdgeInsets.only(top: 30.0),
+      child: DropdownButtonFormField<String>(
+        value: cityLists.any((e) => e.name == selectedCity) ? selectedCity : null,
+        onChanged: (String? newValue) {
+          setState(() {
+            selectedCity = newValue!;
+            // Find the city object and get its ID as an int
+            selectedCityId = cityLists.firstWhere((city) => city.name == newValue).id!;
+            print("selectedCityId $selectedCityId");
+          });
+        },
+        isDense: false,
+        decoration: InputDecoration(
+          hintText: getTranslated(context, "Select City")!,
+          hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+            color: lightBlack2,
+            fontWeight: FontWeight.normal,
+          ),
+          prefixIcon: const Icon(
+            Icons.place_outlined,
+            color: lightBlack2,
+            size: 20,
+          ),
+          prefixIconConstraints: const BoxConstraints(
+            minWidth: 40,
+            maxHeight: 20,
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 5,
+          ),
+          filled: true,
+          fillColor: white,
+          focusedBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(color: primary),
+            borderRadius: BorderRadius.all(Radius.circular(circularBorderRadius7)),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(color: lightBlack2),
+            borderRadius: BorderRadius.all(Radius.circular(circularBorderRadius7)),
+          ),
+        ),
+        items: cityLists.map<DropdownMenuItem<String>>((CityModel city) {
+          bool isSelected = city.name == selectedCity;
+          return DropdownMenuItem<String>(
+            value: city.name,
+            child: Container(
+              decoration: BoxDecoration(
+                color: isSelected ? Colors.green.withOpacity(0.2) : Colors.transparent,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              child: Text(
+                city.name!,
+                style: TextStyle(
+                  color: isSelected ? Colors.green : Colors.black,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+
+
+
 
   storeUrl() {
     return Container(
@@ -1487,8 +1599,8 @@ class _SellerRegisterState extends State<SellerRegister>
     return SizedBox(
       width: 100,
       height: 100,
-      child: SvgPicture.asset(
-        DesignConfiguration.setSvgPath('loginlogo'),
+      child: Image.asset(
+        DesignConfiguration.setPngPath('splashlogo'),
       ),
     );
   }

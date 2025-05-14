@@ -48,6 +48,7 @@ const String EmailText = 'email';
 const String City = "city";
 const String Area = 'area';
 const String Address = 'address';
+const String city = 'city';
 const String Address2 = 'address2';
 const String Pincode = 'pincode';
 const String IMage = 'image';
