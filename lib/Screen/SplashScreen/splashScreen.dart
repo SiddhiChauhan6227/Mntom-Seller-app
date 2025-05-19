@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sellermultivendor/Widget/parameterString.dart';
 import '../../Provider/settingProvider.dart';
 import '../../Widget/desing.dart';
@@ -26,6 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
     SystemChromeSettings.setSystemUIOverlayStyleWithLightBrightNessStyle();
     super.initState();
     startTime();
+    PackageInfo.fromPlatform().then((value) {
+      print("sadDs $value");
+      setState(() {});// Value will be our all details we get from package info package
+    });
   }
 
 //==============================================================================
@@ -42,9 +47,9 @@ class _SplashScreenState extends State<SplashScreen> {
           Container(
             width: double.infinity,
             height: double.infinity,
-            // decoration: DesignConfiguration.back(),
+             decoration: DesignConfiguration.back(),
             child: Center(
-              child: SvgPicture.asset(
+              child: Image.asset(
                 DesignConfiguration.setPngPath('splashlogo'),
                 height: 250,
                 width: 150,

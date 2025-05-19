@@ -16,11 +16,11 @@ import 'package:sellermultivendor/Widget/validation.dart';
 const String title = 'eShop Multi-Vendor - Seller';
 
 //Your application name
-const String appName = 'Seller App eShop';
+const String appName = 'Mntom Seller';
 
 //Your package name
-const String packageName = 'wrteam.seller.multivendor';
-const String iosPackage = 'wrteam.seller.multivendor';
+const String packageName = ' com.mntom.seller';
+const String iosPackage = ' com.mntom.seller';
 
 //Set country code
 String defaultCountryCode = 'IN';
