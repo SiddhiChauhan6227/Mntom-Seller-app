@@ -144,6 +144,9 @@ class _SellerRegisterState extends State<SellerRegister>
          cityLists = (data as List)
               .map((data) => CityModel.fromJson(data))
               .toList();
+         setState(() {
+
+         });
         // } else {
         //   editProvider!.zipSearchList.clear();
         //   editProvider!.zipSearchList = (data as List)
@@ -225,14 +228,6 @@ class _SellerRegisterState extends State<SellerRegister>
           );
           request.files.add(storelogo);
         }
-        /* else {
-          showOverlay(
-            getTranslated(context, "please upload store logo")!,
-            context,
-          );
-          await buttonController!.reverse();
-          return;
-        }*/
 
         if (storeurl != null) {
           request.fields[Storeurl] = storeurl!;
@@ -415,6 +410,7 @@ class _SellerRegisterState extends State<SellerRegister>
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+    setCities();
     return ScaffoldMessenger(
       key: scaffoldMessengerKey,
       child: Scaffold(
@@ -1113,20 +1109,25 @@ class _SellerRegisterState extends State<SellerRegister>
     );
   }
   cityList() {
-    print("LIST OF CITY ${cityLists.length}");
+    print("fiugbbdv nc ${cityLists.length}");
     return Container(
       width: MediaQuery.of(context).size.width * 0.90,
       padding: const EdgeInsets.only(top: 30.0),
       child: DropdownButtonFormField<String>(
-        value: cityLists.any((e) => e.name == selectedCity) ? selectedCity : null,
-        onChanged: (String? newValue) {
+        value: cityLists.isNotEmpty && cityLists.any((e) => e.name == selectedCity)
+            ? selectedCity
+            : null,
+        onChanged: cityLists.isNotEmpty
+            ? (String? newValue) {
           setState(() {
             selectedCity = newValue!;
-            // Find the city object and get its ID as an int
-            selectedCityId = cityLists.firstWhere((city) => city.name == newValue).id!;
+            selectedCityId = cityLists
+                .firstWhere((city) => city.name == newValue)
+                .id!;
             print("selectedCityId $selectedCityId");
           });
-        },
+        }
+            : null, // Disable interaction when list is empty
         isDense: false,
         decoration: InputDecoration(
           hintText: getTranslated(context, "Select City")!,
@@ -1143,44 +1144,59 @@ class _SellerRegisterState extends State<SellerRegister>
             minWidth: 40,
             maxHeight: 20,
           ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 5,
-          ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           filled: true,
           fillColor: white,
           focusedBorder: UnderlineInputBorder(
             borderSide: const BorderSide(color: primary),
-            borderRadius: BorderRadius.all(Radius.circular(circularBorderRadius7)),
+            borderRadius:
+            BorderRadius.all(Radius.circular(circularBorderRadius7)),
           ),
           enabledBorder: UnderlineInputBorder(
             borderSide: const BorderSide(color: lightBlack2),
-            borderRadius: BorderRadius.all(Radius.circular(circularBorderRadius7)),
+            borderRadius:
+            BorderRadius.all(Radius.circular(circularBorderRadius7)),
           ),
         ),
-        items: cityLists.map<DropdownMenuItem<String>>((CityModel city) {
+        items: cityLists.isNotEmpty
+            ? cityLists.map<DropdownMenuItem<String>>((CityModel city) {
           bool isSelected = city.name == selectedCity;
           return DropdownMenuItem<String>(
             value: city.name,
             child: Container(
               decoration: BoxDecoration(
-                color: isSelected ? Colors.green.withOpacity(0.2) : Colors.transparent,
+                color: isSelected
+                    ? Colors.green.withOpacity(0.2)
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(8),
               ),
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              padding:
+              const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               child: Text(
                 city.name!,
                 style: TextStyle(
                   color: isSelected ? Colors.green : Colors.black,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  fontWeight: isSelected
+                      ? FontWeight.bold
+                      : FontWeight.normal,
                 ),
               ),
             ),
           );
-        }).toList(),
+        }).toList()
+            : [
+          const DropdownMenuItem<String>(
+            value: null,
+            child: Text(
+              "No Cities available",
+              style: TextStyle(color: Colors.grey),
+            ),
+          )
+        ],
       ),
     );
   }
+
 
 
 

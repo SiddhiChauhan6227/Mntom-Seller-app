@@ -58,26 +58,14 @@ class _OtoStoreState extends State<OtoStore> {
           width: 40.0,
           child: FittedBox(
             child: FloatingActionButton(
-              backgroundColor: newPrimary,
+              backgroundColor: primary,
               child: const Icon(
                 Icons.add,
                 size: 32,
                 color: white,
               ),
               onPressed: () => _openCreateOtoManagement(context),
-              // final value = await Navigator.push(
-              //   context,
-              //   CupertinoPageRoute(
-              //     builder: (context) => const AddProduct(),
-              //   ),
-              // );
-              //refresh the page if user adds a product
-              // if (value != null && value) {
-              //   Future.delayed(Duration.zero, () {
-              //     _refresh();
-              //   });
-              // }
-              // },
+
             ),
           ),
         ),

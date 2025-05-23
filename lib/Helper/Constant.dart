@@ -13,7 +13,7 @@ import 'package:sellermultivendor/Screen/conversationListScreen.dart';
 import 'package:sellermultivendor/Screen/conversationScreen.dart';
 import 'package:sellermultivendor/Widget/validation.dart';
 
-const String title = 'eShop Multi-Vendor - Seller';
+const String title = 'Mntom - Seller';
 
 //Your application name
 const String appName = 'Mntom Seller';

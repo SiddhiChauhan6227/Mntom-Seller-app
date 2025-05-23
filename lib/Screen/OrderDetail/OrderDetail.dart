@@ -1218,11 +1218,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                   if (pickUpLocationList[j] !=
                                                       "")
 
-                                                  if (model!.itemList![0]
-                                                          .productType !=
-                                                      'digital_product')
-                                                    trackingModel != null
-                                                        ? SingleChildScrollView(
+                                                  SingleChildScrollView(
                                                             scrollDirection:
                                                                 Axis.horizontal,
                                                             child: Row(
@@ -1259,52 +1255,6 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                                       style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white),
                                                                     ),
                                                                   ),
-                                                                  // if (trackingModel
-                                                                  //             .shipmentId !=
-                                                                  //         "" &&
-                                                                  //     trackingModel
-                                                                  //             .awbCode ==
-                                                                  //         "")
-                                                                  //   Padding(
-                                                                  //     padding: const EdgeInsetsDirectional
-                                                                  //         .only(
-                                                                  //         start:
-                                                                  //             10.0),
-                                                                  //     child: CommonRowBtn(
-                                                                  //         title: 'awb',
-                                                                  //         onBtnSelected: () {
-                                                                  //           // commonDialogue(context,
-                                                                  //           //     getTranslated(context, 'Do you want to generate AWB code?')!,
-                                                                  //           //     () {
-                                                                  //           //   generateAWB(trackingModel!.shipmentId!, trackingModel);
-                                                                  //           //   Routes.pop(context);
-                                                                  //           // });
-                                                                  //         }),
-                                                                  //   ),
-                                                                  // if (trackingModel
-                                                                  //             .pickUpScheduleDate !=
-                                                                  //         "" &&
-                                                                  //     trackingModel
-                                                                  //             .awbCode !=
-                                                                  //         "")
-                                                                  //   Padding(
-                                                                  //     padding: const EdgeInsetsDirectional
-                                                                  //         .only(
-                                                                  //         start:
-                                                                  //             10.0),
-                                                                  //     child: CommonRowBtn(
-                                                                  //         title: 'pick up request',
-                                                                  //         onBtnSelected: () {
-                                                                  //           // commonDialogue(context,
-                                                                  //           //     getTranslated(context, 'Do you want to send pick up request?')!,
-                                                                  //           //     () {
-                                                                  //           //   sendPickUpRequest(trackingModel!.shipmentId!);
-                                                                  //           //
-                                                                  //             Routes.pop(context);
-                                                                  //           // });
-                                                                  //         }),
-                                                                  //   ),
-
                                                                     shipmentId ==
                                                                             "" && otoOrderId !=""
                                                                         ? Padding(
@@ -1363,31 +1313,6 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                                           });
                                                                         }),
                                                                   ):SizedBox.shrink(),
-                                                                  // if (trackingModel
-                                                                  //             .labelUrl ==
-                                                                  //         "" &&
-                                                                  //     trackingModel
-                                                                  //             .awbCode !=
-                                                                  //         "")
-                                                                  //   Padding(
-                                                                  //     padding: const EdgeInsetsDirectional
-                                                                  //         .only(
-                                                                  //         start:
-                                                                  //             10.0),
-                                                                  //     child: CommonRowBtn(
-                                                                  //         title: 'Generate label',
-                                                                  //         onBtnSelected: () {
-                                                                  //           // commonDialogue(context,
-                                                                  //           //     getTranslated(context, 'Do you want to generate label?')!,
-                                                                  //           //     () {
-                                                                  //           //   generateLabel(trackingModel!.shipmentId!);
-                                                                  //
-                                                                  //             Routes.pop(context);
-                                                                  //           // });
-                                                                  //         }),
-                                                                  //   ),
-
-
                                                                   if (shipmentId !=
                                                                       ""
                                                                       )
@@ -1419,34 +1344,8 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                                           }),
                                                                     ),
                                                                 ]),
-                                                          )
-                                                        : Align(
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                5),
-                                                                    color:
-                                                                        primary),
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(5),
-                                                                child: Text(
-                                                                  getTranslated(
-                                                                      context,
-                                                                      'Order Not Created')!,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodySmall!
-                                                                      .copyWith(
-                                                                          color:
-                                                                              white),
-                                                                )),
                                                           ),
+
                                                   Padding(
                                                       padding:
                                                           const EdgeInsets.only(
