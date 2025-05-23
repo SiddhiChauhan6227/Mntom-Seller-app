@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -50,21 +41,53 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC_1l5qdSvmWJ7MRj82U3_V4s6ymEprFdg',
-    appId: '1:327324836622:android:728981062068bfc536ad5f',
-    messagingSenderId: '327324836622',
-    projectId: 'eshop-multivendor-new',
-    storageBucket: 'eshop-multivendor-new.appspot.com',
+    apiKey: 'AIzaSyB3d73M7qeLvv3uTEp3Q0aG-xV9Kt91ko8',
+    appId: '1:936221232681:android:ce333595f68202d1fa5638',
+    messagingSenderId: '936221232681',
+    projectId: 'mntom-bd9a1',
+    storageBucket: 'mntom-bd9a1.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBusENYY_9QM5nLi3lMJaCaECAJB2W-LhA',
-    appId: '1:327324836622:ios:c962df41827f3f8a36ad5f',
-    messagingSenderId: '327324836622',
-    projectId: 'eshop-multivendor-new',
-    storageBucket: 'eshop-multivendor-new.appspot.com',
-    androidClientId: '327324836622-ji2sarngpv0f0ga7pucnf128apm136q3.apps.googleusercontent.com',
-    iosClientId: '327324836622-nngdk8fa27nhmnm8vmr8boiffr9o96ls.apps.googleusercontent.com',
-    iosBundleId: 'eshop.seller.multivendor',
+    apiKey: 'AIzaSyDn73MkxubVnSTRKGIucw1OwvJbxCOFs1g',
+    appId: '1:936221232681:ios:1545ab00866a5888fa5638',
+    messagingSenderId: '936221232681',
+    projectId: 'mntom-bd9a1',
+    storageBucket: 'mntom-bd9a1.firebasestorage.app',
+    androidClientId: '936221232681-1ri61bcsqp32d9q9c8t887gviia7sfhj.apps.googleusercontent.com',
+    iosClientId: '936221232681-v41ovbih4l17ape9m784dljns86074p7.apps.googleusercontent.com',
+    iosBundleId: 'com.mntom.seller',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyB4IVkbSpPjC4kcC34PP6AauqNfaZa7hJ4',
+    appId: '1:936221232681:web:2e6c8450411949bafa5638',
+    messagingSenderId: '936221232681',
+    projectId: 'mntom-bd9a1',
+    authDomain: 'mntom-bd9a1.firebaseapp.com',
+    storageBucket: 'mntom-bd9a1.firebasestorage.app',
+    measurementId: 'G-0WSCH2LTQF',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDn73MkxubVnSTRKGIucw1OwvJbxCOFs1g',
+    appId: '1:936221232681:ios:813d7734854ac195fa5638',
+    messagingSenderId: '936221232681',
+    projectId: 'mntom-bd9a1',
+    storageBucket: 'mntom-bd9a1.firebasestorage.app',
+    androidClientId: '936221232681-1ri61bcsqp32d9q9c8t887gviia7sfhj.apps.googleusercontent.com',
+    iosClientId: '936221232681-emrelhdq2rkfj3vnvlhgeb9v92jv9b2j.apps.googleusercontent.com',
+    iosBundleId: 'eshop.mt.eshop',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyCKQZ5wEEzZuYEnW3a3TYTSaayupWAgLl4',
+    appId: '1:936221232681:web:3e9473ac1a935cb1fa5638',
+    messagingSenderId: '936221232681',
+    projectId: 'mntom-bd9a1',
+    authDomain: 'mntom-bd9a1.firebaseapp.com',
+    storageBucket: 'mntom-bd9a1.firebasestorage.app',
+    measurementId: 'G-8ZGW9SW6GJ',
+  );
+
 }

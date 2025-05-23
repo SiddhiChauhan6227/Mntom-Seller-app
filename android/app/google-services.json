@@ -1,26 +1,259 @@
 {
   "project_info": {
-    "project_number": "583082649082",
-    "project_id": "mntom-b9f31",
-    "storage_bucket": "mntom-b9f31.firebasestorage.app"
+    "project_number": "936221232681",
+    "project_id": "mntom-bd9a1",
+    "storage_bucket": "mntom-bd9a1.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:583082649082:android:9ef84d7c6cd148ccfa7043",
+        "mobilesdk_app_id": "1:936221232681:android:21f9711e4970d794fa5638",
         "android_client_info": {
-          "package_name": "com.mntom.seller"
+          "package_name": "com.mntom.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "936221232681-nscvpb5omvtr5md83ji67bl4tk5kigtf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.app",
+            "certificate_hash": "c51895c0c5e8b42ce48cb20ef2e2b18224ac8a12"
+          }
+        },
+        {
+          "client_id": "936221232681-om6c97o5drer4ff19vv8pe0pckhf73m2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.app",
+            "certificate_hash": "5ff257ac5ac7086a2481799cdb9a1d766fa5ebf4"
+          }
+        },
+        {
+          "client_id": "936221232681-0psh09ajcqaiii1fcim16u2u1ofvcnsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyD0Nu54AuQuJb8iZcj7eFBeteO4AkYQXk0"
+          "current_key": "AIzaSyB3d73M7qeLvv3uTEp3Q0aG-xV9Kt91ko8"
+        },
+        {
+          "current_key": "AIzaSyDtLVoejaSu2YjfD9TrLIAko4RLuMvXJm4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936221232681-0psh09ajcqaiii1fcim16u2u1ofvcnsq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "936221232681-6mgq6fr7s3b8rh6dq8cg7s44cc1tchke.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "eshop.seller.multivendor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936221232681:android:ae641ec0d5cf04cbfa5638",
+        "android_client_info": {
+          "package_name": "com.mntom.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936221232681-1ri61bcsqp32d9q9c8t887gviia7sfhj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.customer",
+            "certificate_hash": "27ec37118aba9167ffb9d983e7afd57765c3f18c"
+          }
+        },
+        {
+          "client_id": "936221232681-4ehg5tko6ms7ilcdaudpn81ln8679hap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.customer",
+            "certificate_hash": "fe30f19d74df7f1c5dc9a5921a2cc521fc1c84cf"
+          }
+        },
+        {
+          "client_id": "936221232681-85rr8m6a00u0fo6o5seh022cgc3ttj85.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.customer",
+            "certificate_hash": "5f10ca292c6482687a56e15e8deb49b7cba09a64"
+          }
+        },
+        {
+          "client_id": "936221232681-9rjjdpnsmo3bsqfvpke1b4sqjlksggi2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.customer",
+            "certificate_hash": "c51895c0c5e8b42ce48cb20ef2e2b18224ac8a12"
+          }
+        },
+        {
+          "client_id": "936221232681-ehn36nma6994uriagilf3d4bk8qm5lm8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.customer",
+            "certificate_hash": "d06398f35568e036198d66fb53cabd4e4e6a96ae"
+          }
+        },
+        {
+          "client_id": "936221232681-kpctu7ca437q8000r78g06vtbda3jk0u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.customer",
+            "certificate_hash": "0ea807fe81bd4d61cb40da1709602cab7a9fb2f5"
+          }
+        },
+        {
+          "client_id": "936221232681-lni5pe111r31brl5h149evj7ulgu2dub.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.customer",
+            "certificate_hash": "f49a08c875a80bdf901c30dd9d413c3fbbd64c32"
+          }
+        },
+        {
+          "client_id": "936221232681-r9tad2iv43jkbfnbd24si7qf3c7suh65.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.customer",
+            "certificate_hash": "1851e148000cfdf86b9e927d90f8292c279dbd86"
+          }
+        },
+        {
+          "client_id": "936221232681-0psh09ajcqaiii1fcim16u2u1ofvcnsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3d73M7qeLvv3uTEp3Q0aG-xV9Kt91ko8"
+        },
+        {
+          "current_key": "AIzaSyDtLVoejaSu2YjfD9TrLIAko4RLuMvXJm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936221232681-0psh09ajcqaiii1fcim16u2u1ofvcnsq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "936221232681-6mgq6fr7s3b8rh6dq8cg7s44cc1tchke.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "eshop.seller.multivendor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936221232681:android:127e0e5c1bb39712fa5638",
+        "android_client_info": {
+          "package_name": "com.mntom.seller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936221232681-p4s0o70lns1hrlrolu3a8dlpj2v598ha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.seller",
+            "certificate_hash": "b7a074524512c73bb88cd4428f150a74b246fbfd"
+          }
+        },
+        {
+          "client_id": "936221232681-q9d7sg3mdu0o3jkk2i3r3n1m8ljlo8qm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.seller",
+            "certificate_hash": "5ff257ac5ac7086a2481799cdb9a1d766fa5ebf4"
+          }
+        },
+        {
+          "client_id": "936221232681-0psh09ajcqaiii1fcim16u2u1ofvcnsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3d73M7qeLvv3uTEp3Q0aG-xV9Kt91ko8"
+        },
+        {
+          "current_key": "AIzaSyDtLVoejaSu2YjfD9TrLIAko4RLuMvXJm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936221232681-0psh09ajcqaiii1fcim16u2u1ofvcnsq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "936221232681-6mgq6fr7s3b8rh6dq8cg7s44cc1tchke.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "eshop.seller.multivendor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936221232681:android:ce333595f68202d1fa5638",
+        "android_client_info": {
+          "package_name": "com.mntom.sellermultivendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936221232681-0psh09ajcqaiii1fcim16u2u1ofvcnsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3d73M7qeLvv3uTEp3Q0aG-xV9Kt91ko8"
+        },
+        {
+          "current_key": "AIzaSyDtLVoejaSu2YjfD9TrLIAko4RLuMvXJm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936221232681-0psh09ajcqaiii1fcim16u2u1ofvcnsq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "936221232681-6mgq6fr7s3b8rh6dq8cg7s44cc1tchke.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "eshop.seller.multivendor"
+              }
+            }
+          ]
         }
       }
     }
