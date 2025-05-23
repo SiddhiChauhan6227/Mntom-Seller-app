@@ -285,9 +285,12 @@ class PushNotificationService {
   }
 
   void _registerToken(String? token) async {
+    String deviceType = Platform.isAndroid ? 'android' : Platform.isIOS ? 'ios' : 'unknown';
+
     var parameter = {
       'user_id': context.read<SettingProvider>().CUR_USERID,
       FCMID: token,
+      'device_type':deviceType
     };
     apiBaseHelper.postAPICall(updateFcmApi, parameter).then(
           (getdata) async {},

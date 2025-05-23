@@ -48,7 +48,12 @@ class _WalletHistoryState extends State<WalletHistory>
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   String? amount, msg;
   ScrollController controller = ScrollController();
-  TextEditingController? amtC, acc_num, ifsc_code, acc_name, bankDetailC;
+  // TextEditingController? amtC, ifsc_code, acc_name, bankDetailC;
+  TextEditingController acc_num = TextEditingController();
+  TextEditingController ifsc_code = TextEditingController();
+  TextEditingController acc_name = TextEditingController();
+  TextEditingController bankDetailC = TextEditingController();
+  TextEditingController amtC = TextEditingController();
   Animation? buttonSqueezeanimation;
   AnimationController? buttonController;
   ApiBaseHelper apiBaseHelper = ApiBaseHelper();
@@ -78,9 +83,15 @@ class _WalletHistoryState extends State<WalletHistory>
       ),
     );
     amtC = TextEditingController();
+    acc_num = TextEditingController(); // ✅ This is missing in your code
+
     bankDetailC = TextEditingController();
   }
-
+  @override
+  void dispose() {
+    acc_num?.dispose();
+    super.dispose();
+  }
   _scrollListener() async {
     if (controller.offset >= controller.position.maxScrollExtent &&
         !controller.position.outOfRange) {
@@ -228,8 +239,10 @@ class _WalletHistoryState extends State<WalletHistory>
   // send withdrawel request
 
   Future<void> sendRequest() async {
+    print("SEND WITHDRAW");
     isNetworkAvail = await isNetworkAvailable();
     if (isNetworkAvail) {
+      print("gfyrsfhrsdn ${acc_num}");
       var parameter = {
         UserId: context.read<SettingProvider>().CUR_USERID,
         Amount: amtC!.text.toString(),
@@ -348,7 +361,16 @@ class _WalletHistoryState extends State<WalletHistory>
                               0,
                             ),
                             child: TextFormField(
-                              cursorColor:
+                                onChanged: (value) {
+                                  if (acc_num != "") {
+                                    print("Value from controller: ${acc_num!.text}");
+                                  } else {
+                                    print("Controller is null!$value");
+                                  }
+                                  // accountNumber = value;
+                                },
+
+                                cursorColor:
                                   Theme.of(context).colorScheme.primary,
                               style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary),

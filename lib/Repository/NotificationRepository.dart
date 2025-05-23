@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:io';
 import 'package:sellermultivendor/Helper/ApiBaseHelper.dart';
 import 'package:sellermultivendor/Widget/api.dart';
 import 'package:sellermultivendor/Widget/parameterString.dart';
@@ -40,9 +41,12 @@ class NotificationRepository {
 
   static Future<void> updateFcmId(
       {required String userId, required String fcmId}) async {
+    String deviceType = Platform.isAndroid ? 'android' : Platform.isIOS ? 'ios' : 'unknown';
+
     var parameter = {
       'user_id': userId,
       FCMID: fcmId,
+      'device_type':deviceType
     };
     ApiBaseHelper().postAPICall(updateFcmApi, parameter).then(
           (getdata) async {},
