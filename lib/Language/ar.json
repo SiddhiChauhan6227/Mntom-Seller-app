@@ -542,5 +542,27 @@
   "PLZ_SEL_SELF_HOSTED_VIDEO": "يُرجى تحديد الفيديو المستضاف ذاتيًا",
   "CHAT": "Chat",
   "noMessages": "No messages",
-  "TRY_AGAIN": "Try again"
+  "TRY_AGAIN": "Try again",
+  "Company Id": "معرف الشركة",
+  "Store Name": "اسم المتجر",
+  "Store Id": "معرف المتجر",
+  "Warehouse Id": "معرف المستودع",
+  "Do you want to cancel shipment?": "هل تريد إلغاء الشحنة؟",
+  "Warehouse": "المستودع",
+  "Warehouse Name": "اسم المستودع",
+  "Warehouse City": "مدينة المستودع",
+  "Warehouse Code": "كود المستودع",
+  "Date": "التاريخ",
+  "Create oto Order": "إنشاء طلب أوتو",
+  "Create oto Order Parcel": "إنشاء طرد طلب أوتو",
+  "Shipment created": "تم إنشاء الشحنة",
+  "oto Manangement": "إدارة متجر أوتو",
+  "Shipment Cancelled": "تم إلغاء الشحنة",
+  "Order Cancelled": "تم إلغاء الطلب",
+  "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin": "أدخل كود المستودع المقدم من المسؤول. إذا لم تتلق واحدًا، يرجى التواصل مع المسؤول.",
+  "please fill the required fields": "يرجى ملء الحقول المطلوبة",
+  "Commercial register or self-employment document": "السجل التجاري أو وثيقة العمل الحر",
+  "Total Weight of Box": "الوزن الإجمالي للصندوق",
+  "Otostore": "متجر أوتو"
+
 }

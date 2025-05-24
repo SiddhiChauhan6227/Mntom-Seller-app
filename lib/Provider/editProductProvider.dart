@@ -59,6 +59,7 @@ class EditProductProvider extends ChangeNotifier {
     simpleproductPrice = null;
     simpleproductSpecialPrice = null;
     productImageRelativePath = null;
+    productOtherImageRelativePath=null;
     productImage = null;
     productImageUrl = null;
     uploadedVideoName = null;
@@ -284,6 +285,7 @@ class EditProductProvider extends ChangeNotifier {
   String? simpleproductPrice; //simple_price
   String? simpleproductSpecialPrice; //simple_special_price
   String? productImageRelativePath,
+  productOtherImageRelativePath,
       productImage,
       productImageUrl,
       uploadedVideoName;

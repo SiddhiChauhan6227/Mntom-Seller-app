@@ -16,6 +16,7 @@ currentPage3(
   BuildContext context,
   Function setStateNow,
 ) {
+  print("rfgunjvkm ${editProvider!.showOtherImages.length}");
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -66,9 +67,7 @@ currentPage3(
       editProvider!.showOtherImages.isNotEmpty
           ? getCommanSizedBox()
           : Container(),
-      editProvider!.showOtherImages.isNotEmpty
-          ? uploadedOtherImageShow(setStateNow)
-          : Container(),
+    uploadedOtherImageShow(setStateNow),
       getCommanSizedBox(),
       getPrimaryCommanText(getTranslated(context, "Select Video Type")!, false),
       getCommanSizedBox(),
@@ -182,6 +181,7 @@ selectedMainImageShow() {
 }
 
 uploadedOtherImageShow(Function update) {
+  print("tyghjk ${editProvider!.showOtherImages.length}");
   return editProvider!.showOtherImages.isEmpty
       ? Container()
       : SizedBox(
@@ -310,7 +310,7 @@ getDescription(int fromdescription) {
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(circularBorderRadius5),
       border: Border.all(
-        color: primary,
+        color: grey2,
       ),
     ),
     width: width,
@@ -318,6 +318,8 @@ getDescription(int fromdescription) {
       padding: const EdgeInsets.only(
         left: 8,
         right: 8,
+        top: 18,
+        bottom: 18
       ),
       child: HtmlWidget(
         fromdescription == 1

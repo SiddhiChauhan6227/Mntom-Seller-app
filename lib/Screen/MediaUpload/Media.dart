@@ -490,6 +490,7 @@ class _MediaState extends State<Media> with TickerProviderStateMixin {
                       }
                       edit.editProvider!.showOtherImages
                           .addAll(mediaProvider!.otherImgUrlList);
+                      print("tyhuikolwere  ${edit.editProvider!.showOtherImages.length}");
                     }
                   } else if (widget.from == 'variant') {
                     if (widget.type == "add") {
@@ -582,7 +583,57 @@ class _MediaState extends State<Media> with TickerProviderStateMixin {
                   edit.editProvider!.productImageRelativePath =
                       mediaProvider!.mediaList[index].path!;
                 }
-              } else if (widget.from == "video") {
+              }
+
+              // if (widget.from == "other") {
+                if (widget.from == "other") {
+                  if (widget.type == "add") {
+                    // add.otherPhotos.addAll(otherImgList);
+                    // add.otherImageUrl.addAll(otherImgUrlList);
+                    for (var element in mediaProvider!.mediaList) {
+                      if (element.isSelected) {
+                        add.addProvider!.otherPhotos.add(element.path!);
+                        add.addProvider!.otherImageUrl.add(element.image!);
+                      }
+                    }
+                  }
+                  if (widget.type == "edit") {
+                    edit.editProvider!.otherPhotos
+                        .addAll(mediaProvider!.otherImgList);
+                    if (edit.editProvider!.showOtherImages.isNotEmpty) {
+                      if (mediaProvider!.otherImgList.isNotEmpty) {
+                        for (int i = 0;
+                        i < edit.editProvider!.showOtherImages.length;
+                        i++) {
+                          edit.editProvider!.showOtherImages.removeLast();
+                        }
+                      }
+                    }
+                    // edit.editProvider!.showOtherImages
+                    //     .addAll(mediaProvider!.otherImgUrlList);
+                    print("tyhuikolererr3  ${edit.editProvider!.showOtherImages.length}");
+                  }
+                }
+                // print("uefsndf cx ${widget.type}");
+                // if (widget.type == "add") {
+                //   mediaProvider!.currentSelectedName =
+                //   mediaProvider!.mediaList[index].id!;
+                //   add.addProvider!.productImage =
+                //   "${mediaProvider!.mediaList[index].subDic!}${mediaProvider!.mediaList[index].name!}";
+                //   add.addProvider!.otherImageUrl.add(add.addProvider!.productImage);
+                //
+                // }
+                // if (widget.type == "edit") {
+                //   edit.editProvider!.productImage =
+                //   "${mediaProvider!.mediaList[index].subDic!}${mediaProvider!.mediaList[index].name!}";
+                //   edit.editProvider!.productImageUrl =
+                //   mediaProvider!.mediaList[index].image!;
+                //   edit.editProvider!.productImageRelativePath =
+                //   mediaProvider!.mediaList[index].path!;
+                // }
+              //   print("fhjnkm ${edit.editProvider!.showOtherImages.length}");
+              // }
+              else if (widget.from == "video") {
                 if (widget.type == "add") {
                   add.addProvider!.uploadedVideoName =
                       "${mediaProvider!.mediaList[index].subDic!}${mediaProvider!.mediaList[index].name!}";

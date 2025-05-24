@@ -569,5 +569,7 @@
   "(Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin.)",
 "please fill the required fields": "Please fill the required field(s)",
   "Commercial register or self-employment document": "Commercial register or self-employment document",
-  "Total Weight of Box": "Total Weight of Box"
+  "Total Weight of Box": "Total Weight of Box",
+  "Product Type": "Product Type",
+  "HSN code": "HSN Code"
 }

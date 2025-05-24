@@ -542,5 +542,28 @@
   "BK_NAME": "名前",
   "PLZ_SEL_SELF_HOSTED_VIDEO": "自己ホスト型ビデオを選択してください",
   "noMessages": "No messages",
-  "TRY_AGAIN": "Try again"
+  "TRY_AGAIN": "Try again",
+
+  "Company Id": "会社ID",
+  "Store Name": "店舗名",
+  "Store Id": "店舗ID",
+  "Warehouse Id": "倉庫ID",
+  "Do you want to cancel shipment?": "出荷をキャンセルしますか？",
+  "Warehouse": "倉庫",
+  "Warehouse Name": "倉庫名",
+  "Warehouse City": "倉庫の都市",
+  "Warehouse Code": "倉庫コード",
+  "Date": "日付",
+  "Create oto Order": "OTO注文を作成",
+  "Create oto Order Parcel": "OTO注文パッケージを作成",
+  "Shipment created": "出荷作成済み",
+  "oto Manangement": "OTO店舗管理",
+  "Shipment Cancelled": "出荷キャンセル済み",
+  "Order Cancelled": "注文キャンセル済み",
+  "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin": "管理者から提供された倉庫コードを入力してください。受け取っていない場合は、管理者に連絡してください。",
+  "please fill the required fields": "必須フィールドを入力してください",
+  "Commercial register or self-employment document": "商業登記または自営業の書類",
+  "Total Weight of Box": "ボックスの総重量",
+  "Otostore": "OTOストア"
+
 }

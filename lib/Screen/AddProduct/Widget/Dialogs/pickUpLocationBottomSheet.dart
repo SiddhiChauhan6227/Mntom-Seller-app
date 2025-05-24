@@ -167,7 +167,7 @@ getpickUpLocations(BuildContext context, Function setState) {
                     SizedBox(
                       width: width * 0.6,
                       child: Text(
-                        addProvider!.pickUpLocationList[index].pickupLoc!,
+                        addProvider!.pickUpLocationList[index].pickupLoc??"",
                         style: const TextStyle(
                           fontSize: textFontSize18,
                         ),

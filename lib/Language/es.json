@@ -542,5 +542,27 @@
   "BK_NAME": "Nombre",
   "PLZ_SEL_SELF_HOSTED_VIDEO": "Seleccione el video autohospedado",
   "noMessages": "No messages",
-  "TRY_AGAIN": "Try again"
+  "TRY_AGAIN": "Try again",
+  "Company Id": "ID de la empresa",
+  "Store Name": "Nombre de la tienda",
+  "Store Id": "ID de la tienda",
+  "Warehouse Id": "ID del almacén",
+  "Do you want to cancel shipment?": "¿Desea cancelar el envío?",
+  "Warehouse": "Almacén",
+  "Warehouse Name": "Nombre del almacén",
+  "Warehouse City": "Ciudad del almacén",
+  "Warehouse Code": "Código del almacén",
+  "Date": "Fecha",
+  "Create oto Order": "Crear pedido OTO",
+  "Create oto Order Parcel": "Crear paquete de pedido OTO",
+  "Shipment created": "Envío creado",
+  "oto Manangement": "Gestión de la tienda OTO",
+  "Shipment Cancelled": "Envío cancelado",
+  "Order Cancelled": "Pedido cancelado",
+  "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin": "Ingrese el código de almacén proporcionado por el administrador. Si no ha recibido uno, por favor contacte al administrador.",
+  "please fill the required fields": "Por favor, complete los campos requeridos",
+  "Commercial register or self-employment document": "Registro comercial o documento de autoempleo",
+  "Total Weight of Box": "Peso total de la caja",
+  "Otostore": "Tienda OTO"
+
 }

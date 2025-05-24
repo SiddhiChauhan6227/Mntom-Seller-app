@@ -542,5 +542,27 @@
   "BK_NAME": "Имя",
   "PLZ_SEL_SELF_HOSTED_VIDEO": "Пожалуйста, выберите видео, размещенное на собственном хостинге",
   "noMessages": "No messages",
-  "TRY_AGAIN": "Try again"
+  "TRY_AGAIN": "Try again",
+  "Company Id": "Идентификатор компании",
+  "Store Name": "Название магазина",
+  "Store Id": "Идентификатор магазина",
+  "Warehouse Id": "Идентификатор склада",
+  "Do you want to cancel shipment?": "Хотите отменить отправку?",
+  "Warehouse": "Склад",
+  "Warehouse Name": "Название склада",
+  "Warehouse City": "Город склада",
+  "Warehouse Code": "Код склада",
+  "Date": "Дата",
+  "Create oto Order": "Создать заказ OTO",
+  "Create oto Order Parcel": "Создать посылку заказа OTO",
+  "Shipment created": "Отправка создана",
+  "oto Manangement": "Управление магазином OTO",
+  "Shipment Cancelled": "Отправка отменена",
+  "Order Cancelled": "Заказ отменен",
+  "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin": "Введите код склада, предоставленный администратором. Если вы не получили код, пожалуйста, свяжитесь с администратором.",
+  "please fill the required fields": "Пожалуйста, заполните обязательные поля",
+  "Commercial register or self-employment document": "Коммерческий реестр или документ о самозанятости",
+  "Total Weight of Box": "Общий вес коробки",
+  "Otostore": "Магазин OTO"
+
 }

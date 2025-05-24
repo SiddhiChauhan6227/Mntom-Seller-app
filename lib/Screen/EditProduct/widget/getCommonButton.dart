@@ -32,6 +32,7 @@ getCommonButton(
           (value) => setState(),
         );
       } else if (index == 2) {
+        print("ebdhsn m ");
         Navigator.push(
           context,
           CupertinoPageRoute(

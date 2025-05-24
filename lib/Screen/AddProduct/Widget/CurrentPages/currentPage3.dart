@@ -17,6 +17,8 @@ currentPage3(
   Function setState,
   Function updateCitys,
 ) {
+  print("fojeidknm ${addProvider!.otherImageUrl.length}");
+  print("fojeidknm ${addProvider!.productImage.length}");
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -164,7 +166,7 @@ getDescription(int fromdescription) {
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(circularBorderRadius5),
       border: Border.all(
-        color: primary,
+        color: grey2,
       ),
     ),
     width: width,
@@ -172,6 +174,8 @@ getDescription(int fromdescription) {
       padding: const EdgeInsets.only(
         left: 8,
         right: 8,
+          top: 16,
+          bottom: 16
       ),
       child: HtmlWidget(
         fromdescription == 1

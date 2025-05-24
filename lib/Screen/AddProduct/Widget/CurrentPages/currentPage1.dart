@@ -49,7 +49,7 @@ currentPage1(
         context,
       ),
       getCommanSizedBox(),
-      getPrimaryCommanText("Product Type", false),
+      getPrimaryCommanText(getTranslated(context, "Product Type")!, false),
       getCommanSizedBox(),
       getIconSelectionDesing(getTranslated(context, "Select Tax")!, 15, context,
           setState, updateCity),
@@ -79,7 +79,7 @@ currentPage1(
           getTranslated(context, "Made In")!, 3, context, setState, updateCity),
       getCommanSizedBox(),
       addProvider!.currentSellectedProductIsPysical
-          ? getPrimaryCommanText('HSN Code', false)
+          ? getPrimaryCommanText(getTranslated(context, 'HSN Code')!, false)
           : Container(),
       addProvider!.currentSellectedProductIsPysical
           ? getCommanSizedBox()

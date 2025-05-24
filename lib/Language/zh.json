@@ -542,5 +542,27 @@
   "BK_NAME": "姓名",
   "PLZ_SEL_SELF_HOSTED_VIDEO": "请选择自托管视频",
   "noMessages": "No messages",
-  "TRY_AGAIN": "Try again"
+  "TRY_AGAIN": "Try again",
+  "Company Id": "公司ID",
+  "Store Name": "商店名称",
+  "Store Id": "商店ID",
+  "Warehouse Id": "仓库ID",
+  "Do you want to cancel shipment?": "您想取消发货吗？",
+  "Warehouse": "仓库",
+  "Warehouse Name": "仓库名称",
+  "Warehouse City": "仓库城市",
+  "Warehouse Code": "仓库代码",
+  "Date": "日期",
+  "Create oto Order": "创建OTO订单",
+  "Create oto Order Parcel": "创建OTO订单包裹",
+  "Shipment created": "发货已创建",
+  "oto Manangement": "管理OTO商店",
+  "Shipment Cancelled": "发货已取消",
+  "Order Cancelled": "订单已取消",
+  "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin": "请输入管理员提供的仓库代码。如果您尚未收到代码，请联系管理员。",
+  "please fill the required fields": "请填写必填字段",
+  "Commercial register or self-employment document": "商业登记或自雇文件",
+  "Total Weight of Box": "箱子总重量",
+  "Otostore": "OTO商店"
+
 }
