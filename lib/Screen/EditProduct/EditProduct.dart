@@ -1022,6 +1022,8 @@ class _EditProductState extends State<EditProduct>
                                             editProvider!.attributesList[i]);
                                       }
                                     }
+                                    print("yuhol ${editProvider!.attributeSetList[index].name}");
+
                                     return Material(
                                       child: StickyHeaderBuilder(
                                         builder: (BuildContext context,
@@ -1053,43 +1055,59 @@ class _EditProductState extends State<EditProduct>
                                               attrList.length, (i) => i).map(
                                             (item) {
                                               return InkWell(
-                                                onTap: () {
-                                                  setState(
-                                                    () {
-                                                      editProvider!
-                                                          .attrController[pos]
-                                                          .text = attrList[
-                                                              item]
-                                                          .name!;
-                                                      editProvider!
-                                                              .attributeIndiacator =
-                                                          pos + 1;
-                                                      if (!editProvider!.attrId
-                                                          .contains(int.parse(
-                                                              attrList[item]
-                                                                  .id!))) {
-                                                        editProvider!.attrId
-                                                            .add(int.parse(
-                                                                attrList[item]
-                                                                    .id!));
-                                                        Navigator.pop(context);
-                                                      } else {
-                                                        setSnackbar(
-                                                          getTranslated(context,
-                                                              "Already inserted..")!,
-                                                          context,
-                                                        );
-                                                      }
-                                                    },
-                                                  );
+                                                //
+
+
+                                                onTap: (){
+                                                  print("vgbhjn ${ editProvider!.attrId.length}");
+                                                  final selectedAttrId = int.parse(attrList[item].id!);
+                                                  final selectedAttrName = attrList[item].name!;
+
+// Check if this attribute name is already used in any other controller
+                                                  bool isDuplicate = editProvider!.attrController
+                                                      .asMap()
+                                                      .entries
+                                                      .any((entry) => entry.key != pos && entry.value.text == selectedAttrName);
+
+                                                  if (isDuplicate) {
+                                                    setSnackbar(getTranslated(context, "Already inserted..")!, context);
+                                                    Navigator.pop(context);
+                                                    return;
+                                                  }
+
+// Replace old ID (if any)
+                                                  if (pos < editProvider!.attrId.length) {
+
+                                                    editProvider!.attrId[pos] = selectedAttrId;
+                                                  } else {
+                                                    editProvider!.attrId.add(selectedAttrId);
+                                                  }
+
+                                                  setState(() {
+                                                    editProvider!.attrController[pos].text = selectedAttrName;
+                                                    editProvider!.attributeIndiacator = pos + 1;
+                                                  });
+                                                  Navigator.pop(context);
+
                                                 },
+
+
                                                 child: Container(
                                                   width: double.maxFinite,
                                                   padding:
                                                       const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    attrList[item].name ?? '',
-                                                    textAlign: TextAlign.start,
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        attrList[item].name ?? '',
+                                                        textAlign: TextAlign.start,
+                                                        style: TextStyle(
+                                                         color: Colors.black,
+                                                        ),
+                                                      ),
+                                                     Spacer(),
+                                                     if(editProvider!.attrId.contains(int.parse(attrList[item].id!))) Icon(Icons.check)
+                                                    ],
                                                   ),
                                                 ),
                                               );
@@ -1793,23 +1811,40 @@ class _EditProductState extends State<EditProduct>
                         children: [
                           OutlinedButton(
                             onPressed: () {
-                              if (editProvider!.attributeIndiacator ==
-                                  editProvider!.attrController.length) {
-                                setState(
-                                  () {
-                                    editProvider!.attrController
-                                        .add(TextEditingController());
-                                    editProvider!.variationBoolList.add(false);
-                                  },
-                                );
+                              final allFilled = editProvider!.attrController
+                                  .every((controller) => controller.text.trim().isNotEmpty);
+
+                              if (allFilled) {
+                                setState(() {
+                                  editProvider!.attrController.add(TextEditingController());
+                                  editProvider!.variationBoolList.add(false);
+                                });
                               } else {
                                 setSnackbar(
-                                  getTranslated(context,
-                                      "fill the box then add another")!,
+                                  getTranslated(context, "fill the box then add another")!,
                                   context,
                                 );
                               }
                             },
+
+                            // onPressed: () {
+                            //   if (editProvider!.attributeIndiacator ==
+                            //       editProvider!.attrController.length) {
+                            //     setState(
+                            //       () {
+                            //         editProvider!.attrController
+                            //             .add(TextEditingController());
+                            //         editProvider!.variationBoolList.add(false);
+                            //       },
+                            //     );
+                            //   } else {
+                            //     setSnackbar(
+                            //       getTranslated(context,
+                            //           "fill the box then add another")!,
+                            //       context,
+                            //     );
+                            //   }
+                            // },
                             child: Text(
                                 getTranslated(context, "Add Attribute")!,
                                 style: const TextStyle(
@@ -2449,8 +2484,30 @@ class _EditProductState extends State<EditProduct>
       () {},
     );
   }
+  void deleteAttribute(int pos, Function setState) {
+    final attributeName = editProvider!.attrController[pos].text;
+
+    final result = editProvider!.attributesList
+        .where((element) => element.name == attributeName)
+        .toList();
+
+    final attributeId = result.isEmpty ? null : result.first.id;
+
+    setState(() {
+      editProvider!.attrController.removeAt(pos);
+      editProvider!.variationBoolList.removeAt(pos);
+
+      if (attributeId != null) {
+        editProvider!.attrId.remove(int.parse(attributeId));
+        editProvider!.selectedAttributeValues.remove(attributeId);
+      }
+    });
+  }
+
 
   addAttribute(int pos) {
+    print("rdrtyhuik $pos");
+    print('ADD Attribute : ${editProvider!.attributesList[3].name}');
     final result = editProvider!.attributesList
         .where(
             (element) => element.name == editProvider!.attrController[pos].text)
@@ -2473,16 +2530,27 @@ class _EditProductState extends State<EditProduct>
                 Text(
                   getTranslated(context, "Select Attribute")!,
                 ),
-                Checkbox(
-                  value: editProvider!.variationBoolList[pos],
-                  onChanged: (bool? value) {
-                    setState(
-                      () {
-                        editProvider!.variationBoolList[pos] = value ?? false;
+                Row(
+                  children: [
+                    Checkbox(
+                      value: editProvider!.variationBoolList[pos],
+                      onChanged: (bool? value) {
+                        setState(
+                              () {
+                            editProvider!.variationBoolList[pos] = value ?? false;
+                          },
+                        );
                       },
-                    );
-                  },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete, color: Colors.red.shade500),
+                      onPressed: () {
+                        deleteAttribute(pos, setState);
+                      },
+                    ),
+                  ],
                 )
+
               ],
             ),
           ),

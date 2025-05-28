@@ -52,7 +52,7 @@ class ParcelWeight extends StatelessWidget {
               },
               decoration: InputDecoration(
                 filled: true,
-                fillColor: grey1,
+                fillColor: grey2,
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 prefixIconConstraints:

@@ -85,46 +85,46 @@ class CommanDesingWidget extends StatelessWidget {
                       if (orderListProvider!.all != null) {
                         return orderListProvider!.all!;
                       } else {
-                        return "";
+                        return "0";
                       }
                     } else if (index == 1) {
                       if (orderListProvider!.received != null) {
                         return orderListProvider!.received!;
                       } else {
-                        return "";
+                        return "0";
                       }
                     } else if (index == 2) {
                       if (orderListProvider!.processed != null) {
                         return orderListProvider!.processed!;
                       } else {
-                        return "";
+                        return "0";
                       }
                     } else if (index == 3) {
                       if (orderListProvider!.shipped != null) {
                         return orderListProvider!.shipped!;
                       } else {
-                        return "";
+                        return "0";
                       }
                     } else if (index == 4) {
                       if (orderListProvider!.delivered != null) {
                         return orderListProvider!.delivered!;
                       } else {
-                        return "";
+                        return "0";
                       }
                     } else if (index == 5) {
                       if (orderListProvider!.cancelled != null) {
                         return orderListProvider!.cancelled!;
                       } else {
-                        return "";
+                        return "0";
                       }
                     } else if (index == 6) {
                       if (orderListProvider!.returned != null) {
                         return orderListProvider!.returned!;
                       } else {
-                        return "";
+                        return "0";
                       }
                     } else {
-                      return "";
+                      return "0";
                     }
                   }(),
                   style: TextStyle(

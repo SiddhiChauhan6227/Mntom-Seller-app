@@ -507,7 +507,8 @@ class EditProductProvider extends ChangeNotifier {
           if (length != null) {
             request.fields[LENGTH] = length!;
           }
-        } else if (productType == 'variable_product') {
+        }
+        else if (productType == 'variable_product') {
           request.fields[VariantStockStatus] = "0";
           String val = '',
               price = '',
@@ -634,7 +635,8 @@ class EditProductProvider extends ChangeNotifier {
               request.fields[VariantLevelStockStatus] = stkStatus;
             }
           }
-        } else if (productType == 'digital_product') {
+        }
+        else if (productType == 'digital_product') {
           request.fields['download_allowed'] =
               digitalProductDownloaded ? "1" : "0";
           request.fields[SimplePrice] = digitalPriceController.text;

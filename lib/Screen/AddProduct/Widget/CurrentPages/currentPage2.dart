@@ -203,16 +203,16 @@ currentPage2(
         updateCitys,
       ),
       getCommanSizedBox(),
-      getPrimaryCommanText(
-          getTranslated(context, "Select PickUp Location")!, false),
-      getCommanSizedBox(),
-      getIconSelectionDesing(
-        getTranslated(context, "PickUp Location Not Selected Yet")!,
-        16,
-        context,
-        update,
-        updateCitys,
-      ),
+      // getPrimaryCommanText(
+      //     getTranslated(context, "Select PickUp Location")!, false),
+      // getCommanSizedBox(),
+      // getIconSelectionDesing(
+      //   getTranslated(context, "PickUp Location Not Selected Yet")!,
+      //   16,
+      //   context,
+      //   update,
+      //   updateCitys,
+      // ),
       addProvider!.currentSellectedProductIsPysical
           ? getCommanSizedBox()
           : Container(),

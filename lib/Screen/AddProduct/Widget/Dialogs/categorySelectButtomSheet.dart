@@ -160,6 +160,8 @@ getCategorys(int index, BuildContext context, Function setState) {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: model.children!.length,
             itemBuilder: (context, index) {
+              print("tcfgvbhjnkml ${model.name}");
+              print("tcfgvbhjnkml ${model.children![index].name}");
               CategoryModel? item1;
               item1 = model.children!.isEmpty ? null : model.children![index];
               return item1 == null

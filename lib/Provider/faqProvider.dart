@@ -172,6 +172,7 @@ class FaQProvider extends ChangeNotifier {
     String? id,
     String answer,
     BuildContext context,
+      Function update
   ) async {
     context.read<SettingProvider>().CUR_USERID = await getPrefrence(Id);
     var parameter = {
@@ -179,15 +180,18 @@ class FaQProvider extends ChangeNotifier {
       Id: id,
       ANSWER: answer,
     };
-    var result = await FaQsRepository.deleteTagsAPI(
+    var result = await FaQsRepository.editProductFaqAPI(
       parameter: parameter,
     );
     bool error = result["error"];
     String? msg = result["message"];
     if (!error) {
       setSnackbar(msg!, context);
-      tagList.clear();
-      scrollLoadmore = true;
+      tagvalue = null;
+      ansValue = null;
+      mobilenumberController.text = "";
+      answerController.text = "";
+      update();
     } else {
       setSnackbar(msg!, context);
     }

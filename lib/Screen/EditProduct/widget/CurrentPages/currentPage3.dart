@@ -167,6 +167,7 @@ currentPage3(
 }
 
 selectedMainImageShow() {
+  print("jkol  ${editProvider!.productImageUrl!}");
   return editProvider!.productImage == ''
       ? Container()
       : ClipRRect(
@@ -181,7 +182,7 @@ selectedMainImageShow() {
 }
 
 uploadedOtherImageShow(Function update) {
-  print("tyghjk ${editProvider!.showOtherImages.length}");
+  print("tyghjk ${editProvider!.showOtherImages}");
   return editProvider!.showOtherImages.isEmpty
       ? Container()
       : SizedBox(
@@ -215,6 +216,8 @@ uploadedOtherImageShow(Function update) {
                     ),
                     InkWell(
                       onTap: () {
+                        print("tyuiko ${editProvider!.showOtherImages}");
+                        print("tyuiko ${i}");
                         editProvider!.showOtherImages.removeAt(i);
                         editProvider!.otherPhotos.removeAt(i);
                         update();

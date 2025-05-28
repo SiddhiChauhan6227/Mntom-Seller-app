@@ -521,6 +521,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                   FloatingActionButton.small(
                     backgroundColor: white,
                     onPressed: () async {
+                      print("cfvgbh ${tempList[0].name}");
                       String text =
                           '${getTranslated(context, "Hello")!} ${tempList[0].name} \n${getTranslated(context, "Your order with id")!} : ${tempList[0].id} ${getTranslated(context, "is")!} ${tempList[0].itemList![0].activeStatus}. ${getTranslated(context, "If you have further query feel free to contact us.Thank you")!}.';
 
@@ -652,63 +653,66 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                         : Container(),
 
 
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          flex: 10, // Assign flex 10 to Create oto Order
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 10),
+                                    Container(
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                            flex: 10, // Assign flex 10 to Create oto Order
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional.only(top: 0),
-                                              child: InkWell(
-                                                child: Container(
-                                                  // height: 50,
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color: primary,
+                                              padding: const EdgeInsets.symmetric(vertical: 10),
+                                              child: Padding(
+                                                padding: const EdgeInsetsDirectional.only(top: 0),
+                                                child: InkWell(
+                                                  child: Container(
+                                                    // height: 50,
+                                                    alignment: Alignment.center,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: primary,
+                                                      ),
+                                                      borderRadius: const BorderRadius.all(
+                                                        Radius.circular(circularBorderRadius5),
+                                                      ),
                                                     ),
-                                                    borderRadius: const BorderRadius.all(
-                                                      Radius.circular(circularBorderRadius5),
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: Text(
+                                                      getTranslated(
+                                                        context,
+                                                        'Create oto Order',
+                                                      )!,
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleSmall!
+                                                          .copyWith(
+                                                        color: primary,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
                                                     ),
                                                   ),
-                                                  padding: const EdgeInsets.all(10),
-                                                  child: Text(
-                                                    getTranslated(
-                                                      context,
-                                                      'Create oto Order',
-                                                    )!,
-                                                    maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall!
-                                                        .copyWith(
-                                                      color: primary,
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                                  ),
+                                                  onTap: () {
+                                                    createOtoParcelDialog();
+                                                  },
                                                 ),
-                                                onTap: () {
-                                                  createOtoParcelDialog();
+                                              ),
+                                            ),
+                                          ),
+                                          Flexible(
+                                            flex: 2, // Assign flex 1 to CommonRowBtnPng
+                                            child: Padding(
+                                              padding: const EdgeInsetsDirectional.only(start: 10.0),
+                                              child: CommonRowBtnPng(
+                                                title: 'Download',
+                                                onBtnSelected: () {
+                                                  downloadWafawiq();
                                                 },
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        Flexible(
-                                          flex: 2, // Assign flex 1 to CommonRowBtnPng
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional.only(start: 10.0),
-                                            child: CommonRowBtnPng(
-                                              title: 'Download',
-                                              onBtnSelected: () {
-                                                downloadWafawiq();
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
 
                                     //item's here

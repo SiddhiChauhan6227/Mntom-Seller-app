@@ -571,5 +571,11 @@
   "Commercial register or self-employment document": "Commercial register or self-employment document",
   "Total Weight of Box": "Total Weight of Box",
   "Product Type": "Product Type",
-  "HSN code": "HSN Code"
+  "HSN code": "HSN Code",
+  "Confirm Delete": "Confirm Delete",
+  "Are you sure you want to delete this answer?": "Are you sure you want to delete this answer?",
+  "Cancel": "Cancel",
+  "Confirmation": "Confirmation",
+  "Are you sure you want to disable this product?": "Are you sure you want to disable this product?",
+  "Disable": "Disable"
 }

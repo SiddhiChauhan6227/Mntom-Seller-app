@@ -24,6 +24,8 @@ class DesignConfiguration {
     );
   }
 
+
+
   static String? getPriceFormat(
     BuildContext context,
     double price,
@@ -48,11 +50,20 @@ class DesignConfiguration {
   static Widget getNoItem(BuildContext context) {
     return Center(
       child: Text(
-        getTranslated(context, "noItem")!,
+        getTranslated(context, "noItem",)!,
+        style: TextStyle(fontSize: 20,color: secondary),
       ),
     );
   }
+  static getNoDataImage(BuildContext context) {
 
+    return Center(
+      child:  Image.asset(
+        'assets/images/PNG/nodata.png', // Replace with your actual asset path
+        height: 300, // Adjust height as needed
+      ),
+    );
+  }
 // progress
   static Widget showCircularProgress(
     bool isProgress,

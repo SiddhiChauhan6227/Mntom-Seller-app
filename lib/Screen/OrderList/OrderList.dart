@@ -17,7 +17,9 @@ import 'Widget/commanDesingField.dart';
 import 'Widget/orderIteam.dart';
 
 class OrderList extends StatefulWidget {
-  const OrderList({Key? key}) : super(key: key);
+  final bool from;
+
+  OrderList({Key? key, this.from = false}) : super(key: key);
 
   @override
   _OrderListState createState() => _OrderListState();
@@ -35,6 +37,7 @@ class _OrderListState extends State<OrderList>
   @override
   bool get wantKeepAlive => true;
   bool serachIsEnable = false;
+  int _selectedOrderType = 0; // 0: All, 1: Simple, 2: Digital
 
   @override
   void initState() {
@@ -259,7 +262,6 @@ class _OrderListState extends State<OrderList>
   }
 
   _showContent() {
-    print("order list length****${orderListProvider!.orderList.length}");
     return NotificationListener<ScrollNotification>(
       child: Stack(
         children: [
@@ -290,6 +292,24 @@ class _OrderListState extends State<OrderList>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          if (widget.from == true)
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.only(
+                                    start: 8.0),
+                                child: Container(
+                                    // color: Colors.red,
+                                    height: 60,
+                                    width: width * 0.1,
+                                    child: Icon(
+                                      Icons.arrow_back_ios,
+                                      color: white,
+                                    )),
+                              ),
+                            ),
                           serachIsEnable
                               ? Padding(
                                   padding: const EdgeInsetsDirectional.only(
@@ -383,74 +403,148 @@ class _OrderListState extends State<OrderList>
                                     size: 18,
                                   ),
                                   onSelected: (dynamic value) {
-                                    switch (value) {
-                                      case 0:
-                                        return () {
+                                    setState(() {
+                                      _selectedOrderType = value;
+                                      switch (value) {
+                                        case 0:
                                           orderListProvider!
                                               .currentSelectedOrderType = '';
-                                          _refresh();
-                                        }();
-                                      case 1:
-                                        return () {
+                                          break;
+                                        case 1:
                                           orderListProvider!
                                                   .currentSelectedOrderType =
                                               'simple';
-                                          _refresh();
-                                        }();
-                                      case 2:
-                                        return () {
+                                          break;
+                                        case 2:
                                           orderListProvider!
                                                   .currentSelectedOrderType =
                                               'digital';
-                                          _refresh();
-                                        }();
-                                    }
+                                          break;
+                                      }
+                                    });
+                                    _refresh();
                                   },
                                   itemBuilder: (BuildContext context) =>
                                       <PopupMenuEntry>[
-                                    const PopupMenuItem(
+                                    PopupMenuItem(
                                       value: 0,
-                                      child: ListTile(
-                                        dense: true,
-                                        contentPadding:
-                                            EdgeInsetsDirectional.only(
-                                                start: 0.0, end: 0.0),
-                                        leading: Icon(
-                                          Icons.format_align_justify,
-                                          color: primary,
-                                          size: 25,
+                                      child: Container(
+                                        padding: _selectedOrderType == 0
+                                            ? const EdgeInsets.symmetric(
+                                                horizontal: 4)
+                                            : null, // optional spacing
+                                        decoration: _selectedOrderType == 0
+                                            ? BoxDecoration(
+                                                color: primary.withValues(
+                                                    alpha:
+                                                        0.4), // background color
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        12), // rounded corners
+                                              )
+                                            : BoxDecoration(),
+
+                                        child: ListTile(
+                                          dense: true,
+                                          contentPadding:
+                                              const EdgeInsetsDirectional.only(
+                                                  start: 0.0, end: 0.0),
+                                          leading: Icon(
+                                            Icons.format_align_justify,
+                                            color: _selectedOrderType == 0
+                                                ? secondary
+                                                : primary,
+                                            size: 25,
+                                          ),
+                                          title: Text(
+                                            "All",
+                                            style: TextStyle(
+                                              color: _selectedOrderType == 0
+                                                  ? secondary
+                                                  : null,
+                                            ),
+                                          ),
                                         ),
-                                        title: Text("All"),
                                       ),
                                     ),
-                                    const PopupMenuItem(
+                                    PopupMenuItem(
                                       value: 1,
-                                      child: ListTile(
-                                        dense: true,
-                                        contentPadding:
-                                            EdgeInsetsDirectional.only(
-                                                start: 0.0, end: 0.0),
-                                        leading: Icon(
-                                          Icons.redeem,
-                                          color: primary,
-                                          size: 25,
+                                      child: Container(
+                                        padding: _selectedOrderType == 1
+                                            ? const EdgeInsets.symmetric(
+                                                horizontal: 4)
+                                            : null, // optional spacing
+                                        decoration: _selectedOrderType == 1
+                                            ? BoxDecoration(
+                                                color: primary.withValues(
+                                                    alpha:
+                                                        0.4), // background color
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        12), // rounded corners
+                                              )
+                                            : BoxDecoration(),
+                                        child: ListTile(
+                                          dense: true,
+                                          contentPadding:
+                                              const EdgeInsetsDirectional.only(
+                                                  start: 0.0, end: 0.0),
+                                          leading: Icon(
+                                            Icons.redeem,
+                                            color: _selectedOrderType == 1
+                                                ? secondary
+                                                : primary,
+                                            size: 25,
+                                          ),
+                                          title: Text(
+                                            "Simple",
+                                            style: TextStyle(
+                                              color: _selectedOrderType == 1
+                                                  ? secondary
+                                                  : null,
+                                            ),
+                                          ),
                                         ),
-                                        title: Text("Simple"),
                                       ),
                                     ),
-                                    const PopupMenuItem(
+                                    PopupMenuItem(
                                       value: 2,
-                                      child: ListTile(
-                                        dense: true,
-                                        contentPadding:
-                                            EdgeInsetsDirectional.only(
-                                                start: 0.0, end: 0.0),
-                                        leading: Icon(
-                                          Icons.memory,
-                                          color: primary,
-                                          size: 20,
+                                      child: Container(
+                                        padding: _selectedOrderType == 2
+                                            ? const EdgeInsets.symmetric(
+                                                horizontal: 4)
+                                            : null, // optional spacing
+                                        decoration: _selectedOrderType == 2
+                                            ? BoxDecoration(
+                                                color: primary.withValues(
+                                                    alpha:
+                                                        0.4), // background color
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        12), // rounded corners
+                                              )
+                                            : BoxDecoration(),
+                                        child: ListTile(
+                                          dense: true,
+                                          contentPadding:
+                                              const EdgeInsetsDirectional.only(
+                                                  start: 0.0, end: 0.0),
+                                          leading: Icon(
+                                            Icons.memory,
+                                            color: _selectedOrderType == 2
+                                                ? secondary
+                                                : primary,
+                                            size: 20,
+                                          ),
+                                          title: Text(
+                                            "Digital",
+                                            style: TextStyle(
+                                              color: _selectedOrderType == 2
+                                                  ? secondary
+                                                  : null,
+                                            ),
+                                          ),
                                         ),
-                                        title: Text("Digital"),
                                       ),
                                     ),
                                   ],
@@ -528,9 +622,19 @@ class _OrderListState extends State<OrderList>
               ),
               _filterRow(),
               orderListProvider!.scrollNodata
-                  ? SizedBox(
-                      height: height * 0.5,
-                      child: DesignConfiguration.getNoItem(context))
+                  ? Expanded(
+                    child: SizedBox(
+                        height: height * 0.5,
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              DesignConfiguration.getNoDataImage(context),
+                              DesignConfiguration.getNoItem(context),
+                            ],
+                          ),
+                        )),
+                  )
                   : Flexible(
                       child: RefreshIndicator(
                         key: orderListProvider!.refreshIndicatorKey,

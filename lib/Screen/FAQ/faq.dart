@@ -437,17 +437,19 @@ class _AddFAQsState extends State<AddFAQs> with TickerProviderStateMixin {
                                     faqProvider!.tagList[index].id,
                                     faqProvider!.listController[index].text,
                                     context,
+                                      setStateNow
                                   );
-                                  faqProvider!.tagList.clear();
-                                  faqProvider!.scrollLoadmore = true;
+                                  // faqProvider!.tagList.clear();
+                                  // faqProvider!.scrollLoadmore = true;
                                   Future.delayed(const Duration(seconds: 2))
                                       .then(
                                     (_) async {
                                       faqProvider!.scrollLoadmore = true;
                                       faqProvider!.scrollOffset = 0;
                                       faqProvider!
-                                          .getFaQs(context, setStateNow, id);
+                                          .getFaQs(context, setStateNow, widget.id!);
                                       setStateNow();
+                                      Navigator.pop(context);
                                     },
                                   );
                                 }
@@ -523,10 +525,17 @@ class _AddFAQsState extends State<AddFAQs> with TickerProviderStateMixin {
               GradientAppBar(
                 widget.model!.name ?? "",
               ),
-              SizedBox(
-                height: height * 0.9,
-                child: DesignConfiguration.getNoItem(context),
-              ),
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      DesignConfiguration.getNoDataImage(context),
+                      DesignConfiguration.getNoItem(context),
+                    ],
+                  ),
+                ),
+              )
             ],
           )
         : NotificationListener<ScrollNotification>(

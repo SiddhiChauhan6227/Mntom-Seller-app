@@ -779,24 +779,44 @@ class StateProduct extends State<ProductList>
                           ),
                           Expanded(
                             child: InkWell(
-                              onTap: () {
-                                if (model.status != "1") {
+                              onTap: () async {
+                                String action = model.status != "1" ? "Enable" : "Disable";
+                                bool? confirm = await showDialog<bool>(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text(getTranslated(context, 'Confirmation')!),
+                                    content: Text(
+                                        'Are you sure you want to $action this product?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.of(context).pop(false),
+                                        child: Text(getTranslated(context, 'Cancel')!),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.of(context).pop(true),
+                                        child: Text(action),
+                                      ),
+                                    ],
+                                  ),
+                                );
+
+                                if (confirm == true) {
+                                  String newStatus = model.status != "1" ? "1" : "0";
                                   productListProvider!.updateProductStatus(
-                                      model.id!, "1", context, setStateNow);
-                                } else {
-                                  productListProvider!.updateProductStatus(
-                                      model.id!, "0", context, setStateNow);
+                                      model.id!, newStatus, context, setStateNow);
                                 }
                               },
                               child: commanBtn(
                                 model.status == "1"
-                                    ? getTranslated(context, 'Enable')!
-                                    : getTranslated(context, "Disable")!,
+                                    ? getTranslated(context, 'Disable')!
+                                    : getTranslated(context, "Enable")!,
                                 true,
                                 model.status != "1",
                               ),
                             ),
                           ),
+
+
                         ],
                       ),
                     ),
@@ -1085,7 +1105,15 @@ class StateProduct extends State<ProductList>
     return productListProvider!.isLoading
         ? const ShimmerEffect()
         : productListProvider!.productList.isEmpty
-            ? DesignConfiguration.getNoItem(context)
+            ?    Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DesignConfiguration.getNoDataImage(context),
+                  DesignConfiguration.getNoItem(context),
+                ],
+              ),
+            )
             : RefreshIndicator(
                 key: productListProvider!.refreshIndicatorKey,
                 onRefresh: _refresh,

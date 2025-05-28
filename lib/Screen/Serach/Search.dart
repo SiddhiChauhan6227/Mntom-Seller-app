@@ -434,7 +434,15 @@ class _StateSearch extends State<Search> with TickerProviderStateMixin {
 
   _showContent() {
     return searchProvider!.notificationisnodata
-        ? DesignConfiguration.getNoItem(context)
+        ?    Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DesignConfiguration.getNoDataImage(context),
+              DesignConfiguration.getNoItem(context),
+            ],
+          ),
+        )
         : NotificationListener<ScrollNotification>(
             child: Column(
               children: <Widget>[

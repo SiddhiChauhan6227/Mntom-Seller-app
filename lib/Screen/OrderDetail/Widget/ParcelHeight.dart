@@ -51,7 +51,7 @@ class ParcelHeight extends StatelessWidget {
               validator: (val) => StringValidation.validateField(val, context),
               decoration: InputDecoration(
                 filled: true,
-                fillColor:  grey1,
+                fillColor:  grey2,
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 prefixIconConstraints:

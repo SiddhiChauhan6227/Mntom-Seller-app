@@ -95,16 +95,41 @@ class GetMediaWidget extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          faqProvider!.deleteTagsAPI(
-                            faqProvider!.tagList[index].id,
-                            context,
-                          );
-                          Future.delayed(const Duration(seconds: 2)).then(
-                            (_) async {
-                              faqProvider!.scrollLoadmore = true;
-                              faqProvider!.scrollOffset = 0;
-                              faqProvider!.getFaQs(context, update, id);
-                              update();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext dialogContext) {
+                              return AlertDialog(
+                                title: Text(getTranslated(context, "Confirm Delete")!),
+                                content: Text(getTranslated(context, "Are you sure you want to delete this answer?")!),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.of(dialogContext).pop(), // cancel
+                                    child: Text(getTranslated(context, "Cancel")!),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(dialogContext).pop(); // close dialog
+                                      faqProvider!.deleteTagsAPI(
+                                        faqProvider!.tagList[index].id,
+                                        context,
+                                      );
+                                      faqProvider!.scrollGettingData = false;
+                                      Future.delayed(const Duration(seconds: 2)).then(
+                                            (_) async {
+                                          faqProvider!.scrollLoadmore = false;
+                                          faqProvider!.scrollOffset = 0;
+                                          faqProvider!.getFaQs(context, update, id);
+                                          update();
+                                        },
+                                      );
+                                    },
+                                    child: Text(
+                                      getTranslated(context, "Delete")!,
+                                      style: const TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                ],
+                              );
                             },
                           );
                         },
@@ -114,6 +139,29 @@ class GetMediaWidget extends StatelessWidget {
                           size: 20,
                         ),
                       ),
+
+                      // InkWell(
+                      //   onTap: () {
+                      //     faqProvider!.deleteTagsAPI(
+                      //       faqProvider!.tagList[index].id,
+                      //       context,
+                      //     );
+                      //     faqProvider!.scrollGettingData=false;
+                      //     Future.delayed(const Duration(seconds: 2)).then(
+                      //       (_) async {
+                      //         faqProvider!.scrollLoadmore = false;
+                      //         faqProvider!.scrollOffset = 0;
+                      //         faqProvider!.getFaQs(context, update, id);
+                      //         update();
+                      //       },
+                      //     );
+                      //   },
+                      //   child: const Icon(
+                      //     Icons.delete,
+                      //     color: primary,
+                      //     size: 20,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

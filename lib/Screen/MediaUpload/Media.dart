@@ -465,34 +465,7 @@ class _MediaState extends State<Media> with TickerProviderStateMixin {
                 (widget.from == "main" && widget.type == "add"))
             ? TextButton(
                 onPressed: () {
-                  if (widget.from == "other") {
-                    if (widget.type == "add") {
-                      // add.otherPhotos.addAll(otherImgList);
-                      // add.otherImageUrl.addAll(otherImgUrlList);
-                      for (var element in mediaProvider!.mediaList) {
-                          if (element.isSelected) {
-                            add.addProvider!.otherPhotos.add(element.path!);
-                            add.addProvider!.otherImageUrl.add(element.image!);
-                          }
-                        }
-                    }
-                    if (widget.type == "edit") {
-                      edit.editProvider!.otherPhotos
-                          .addAll(mediaProvider!.otherImgList);
-                      if (edit.editProvider!.showOtherImages.isNotEmpty) {
-                        if (mediaProvider!.otherImgList.isNotEmpty) {
-                          for (int i = 0;
-                              i < edit.editProvider!.showOtherImages.length;
-                              i++) {
-                            edit.editProvider!.showOtherImages.removeLast();
-                          }
-                        }
-                      }
-                      edit.editProvider!.showOtherImages
-                          .addAll(mediaProvider!.otherImgUrlList);
-                      print("tyhuikolwere  ${edit.editProvider!.showOtherImages.length}");
-                    }
-                  } else if (widget.from == 'variant') {
+                  if (widget.from == 'variant') {
                     if (widget.type == "add") {
                       add.addProvider!.variationList[widget.pos].images =
                           mediaProvider!.variantImgList;
@@ -561,6 +534,8 @@ class _MediaState extends State<Media> with TickerProviderStateMixin {
     return Card(
       child: InkWell(
         onTap: () {
+          print("gvbhjkml,${widget.from}");
+          print("gvbhjkml,${widget.type}");
           setState(
             () {
               mediaProvider!.mediaList[index].isSelected =
@@ -598,8 +573,13 @@ class _MediaState extends State<Media> with TickerProviderStateMixin {
                     }
                   }
                   if (widget.type == "edit") {
-                    edit.editProvider!.otherPhotos
-                        .addAll(mediaProvider!.otherImgList);
+                    print("tuyhijk ${mediaProvider!.mediaList[index].image!}");
+                    edit.editProvider!.showOtherImages
+                        .add(mediaProvider!.mediaList[index].image!);
+                    edit.editProvider!.otherPhotos.addAll([
+                      '${mediaProvider!.mediaList[index].subDic!}${mediaProvider!.mediaList[index].name!}'
+                    ]);
+                    print("gvhjikol ${edit.editProvider!.showOtherImages}");
                     if (edit.editProvider!.showOtherImages.isNotEmpty) {
                       if (mediaProvider!.otherImgList.isNotEmpty) {
                         for (int i = 0;

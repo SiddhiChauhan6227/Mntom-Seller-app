@@ -62,6 +62,7 @@ class MediaProvider extends ChangeNotifier {
     BuildContext context,
     String from,
   ) async {
+    print("tfghjkl $from");
     try {
       isNetworkAvail = await isNetworkAvailable();
       if (isNetworkAvail) {
@@ -79,6 +80,12 @@ class MediaProvider extends ChangeNotifier {
         };
         if (from == "video") {
           parameter["type"] = "video";
+        } if (from == "other") {
+          print("fvgbhjnmk ");
+          parameter["type"] = "image";
+        } if (from == "main") {
+          print("fvgbhjnmk ");
+          parameter["type"] = "image";
         }
         if (from == "archive,document") {
           parameter["type"] = "archive,document";
