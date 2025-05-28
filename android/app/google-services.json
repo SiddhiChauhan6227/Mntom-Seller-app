@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "936221232681-hih3risus5b2g9jejl5jmk9nreicnh3j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mntom.app",
+            "certificate_hash": "59ba36636ac4b6e15d73d357f7b87085dc0cb2e8"
+          }
+        },
+        {
           "client_id": "936221232681-nscvpb5omvtr5md83ji67bl4tk5kigtf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
