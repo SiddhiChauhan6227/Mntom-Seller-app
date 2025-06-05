@@ -8,7 +8,7 @@ import '../../../Widget/validation.dart';
 class UploadFaQWidget extends StatelessWidget {
   String id;
   Function setStateNow;
-  UploadFaQWidget({
+    UploadFaQWidget({
     Key? key,
     required this.id,
     required this.setStateNow,
@@ -113,12 +113,16 @@ class UploadFaQWidget extends StatelessWidget {
                   faqProvider!.tagList.clear();
                   faqProvider!.scrollLoadmore = true;
                   if (faqProvider!.tagvalue != '' &&
-                      faqProvider!.tagvalue != null) {
+                      faqProvider!.tagvalue != null && faqProvider!.ansValue != '' &&
+                      faqProvider!.ansValue != null) {
+                    print("tfghjkl ${faqProvider!.ansValue}");
+                    print("tfghjkl ${faqProvider!.tagvalue}");
                     faqProvider!.addTagAPI(context, id, setStateNow);
                   } else {
-                    setSnackbar(
-                        getTranslated(context, "Please Add Questions Value")!,
-                        context);
+                    showCenterDialog(
+                      getTranslated(context, "Please Add Questions Value")!,
+                      context,
+                    );
                   }
                   Future.delayed(const Duration(seconds: 2)).then(
                     (_) async {

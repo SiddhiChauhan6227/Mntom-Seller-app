@@ -561,39 +561,35 @@ class _MediaState extends State<Media> with TickerProviderStateMixin {
               }
 
               // if (widget.from == "other") {
-                if (widget.from == "other") {
-                  if (widget.type == "add") {
-                    // add.otherPhotos.addAll(otherImgList);
-                    // add.otherImageUrl.addAll(otherImgUrlList);
-                    for (var element in mediaProvider!.mediaList) {
-                      if (element.isSelected) {
+              if (widget.from == "other") {
+                if (widget.type == "add") {
+                  // Add only new selected images (avoid duplicates)
+                  for (var element in mediaProvider!.mediaList) {
+                    if (element.isSelected) {
+                      // Check if image is not already added
+                      if (!add.addProvider!.otherImageUrl.contains(element.image!)) {
                         add.addProvider!.otherPhotos.add(element.path!);
                         add.addProvider!.otherImageUrl.add(element.image!);
                       }
                     }
                   }
-                  if (widget.type == "edit") {
-                    print("tuyhijk ${mediaProvider!.mediaList[index].image!}");
-                    edit.editProvider!.showOtherImages
-                        .add(mediaProvider!.mediaList[index].image!);
-                    edit.editProvider!.otherPhotos.addAll([
-                      '${mediaProvider!.mediaList[index].subDic!}${mediaProvider!.mediaList[index].name!}'
-                    ]);
-                    print("gvhjikol ${edit.editProvider!.showOtherImages}");
-                    if (edit.editProvider!.showOtherImages.isNotEmpty) {
-                      if (mediaProvider!.otherImgList.isNotEmpty) {
-                        for (int i = 0;
-                        i < edit.editProvider!.showOtherImages.length;
-                        i++) {
-                          edit.editProvider!.showOtherImages.removeLast();
-                        }
-                      }
-                    }
-                    // edit.editProvider!.showOtherImages
-                    //     .addAll(mediaProvider!.otherImgUrlList);
-                    print("tyhuikolererr3  ${edit.editProvider!.showOtherImages.length}");
-                  }
                 }
+
+                if (widget.type == "edit") {
+                  print("tuyhijk ${mediaProvider!.mediaList[index].image!}");
+
+                  // Add only the selected image if not already present
+                  if (!edit.editProvider!.showOtherImages.contains(mediaProvider!.mediaList[index].image!)) {
+                    edit.editProvider!.showOtherImages.add(mediaProvider!.mediaList[index].image!);
+                    edit.editProvider!.otherPhotos.add(
+                        '${mediaProvider!.mediaList[index].subDic!}${mediaProvider!.mediaList[index].name!}'
+                    );
+                  }
+
+                  print("gvhjikol ${edit.editProvider!.showOtherImages}");
+                  print("tyhuikolererr3 ${edit.editProvider!.showOtherImages.length}");
+                }
+              }
                 // print("uefsndf cx ${widget.type}");
                 // if (widget.type == "add") {
                 //   mediaProvider!.currentSelectedName =

@@ -359,7 +359,7 @@
   "Return Policy": "Return Policy",
   "Shipping Policy": "Shipping Policy",
   "Enter New Question": "Enter New Question",
-  "Enter Your Answer (Optional)": "Enter Your Answer (Optional)",
+  "Enter Your Answer (Optional)": "Enter Your Answer",
   "Add Question": "Add Question",
   "No Answer Yet..!": "No Answer Yet..!",
   "Edit Your Answer": "Edit Your Answer",
@@ -406,7 +406,7 @@
   "HSN Code": "HSN Code",
   "Add Sort Description": "Add Sort Description",
   "Edit Sort Description": "Edit Sort Description",
-  "Please Add Questions Value": "Please Add Questions Value",
+  "Please Add Questions Value": "Please Add Questions and Value  ",
   "something Error Please Try again...!": "something Error Please Try again...!",
   "Report": "Report",
   "Choose Location": "Choose Location",
@@ -577,5 +577,7 @@
   "Cancel": "Cancel",
   "Confirmation": "Confirmation",
   "Are you sure you want to disable this product?": "Are you sure you want to disable this product?",
-  "Disable": "Disable"
+  "Disable": "Disable",
+  "attributetooltip": "This attribute will be used to create product variations.",
+  "nofiltersasnoattributesdata": "No Attributes in any of items!"
 }

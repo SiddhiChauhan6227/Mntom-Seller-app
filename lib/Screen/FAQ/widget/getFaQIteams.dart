@@ -4,7 +4,7 @@ import '../../../Helper/Color.dart';
 import '../../../Helper/Constant.dart';
 import '../../../Widget/validation.dart';
 
-class GetMediaWidget extends StatelessWidget {
+class GetMediaWidget extends StatefulWidget {
   int index;
   String id;
   Function update;
@@ -15,6 +15,14 @@ class GetMediaWidget extends StatelessWidget {
     required this.id,
   }) : super(key: key);
 
+  @override
+  State<GetMediaWidget> createState() => _GetMediaWidgetState();
+}
+
+class _GetMediaWidgetState extends State<GetMediaWidget> {
+  setStateNow() {
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -66,7 +74,7 @@ class GetMediaWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              faqProvider!.tagList[index].question!,
+                              faqProvider!.tagList[widget.index].question!,
                               style: const TextStyle(
                                 color: black,
                                 fontWeight: FontWeight.w400,
@@ -79,8 +87,8 @@ class GetMediaWidget extends StatelessWidget {
                               height: 05,
                             ),
                             Text(
-                              faqProvider!.tagList[index].answer!.isNotEmpty
-                                  ? faqProvider!.tagList[index].answer!
+                              faqProvider!.tagList[widget.index].answer!.isNotEmpty
+                                  ? faqProvider!.tagList[widget.index].answer!
                                   : getTranslated(context, "No Answer Yet..!")!,
                               style: TextStyle(
                                 color: black.withOpacity(0.6),
@@ -110,7 +118,7 @@ class GetMediaWidget extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.of(dialogContext).pop(); // close dialog
                                       faqProvider!.deleteTagsAPI(
-                                        faqProvider!.tagList[index].id,
+                                        faqProvider!.tagList[widget.index].id,
                                         context,
                                       );
                                       faqProvider!.scrollGettingData = false;
@@ -118,8 +126,8 @@ class GetMediaWidget extends StatelessWidget {
                                             (_) async {
                                           faqProvider!.scrollLoadmore = false;
                                           faqProvider!.scrollOffset = 0;
-                                          faqProvider!.getFaQs(context, update, id);
-                                          update();
+                                          faqProvider!.getFaQs(context, widget.update, widget.id);
+                                          widget.update();
                                         },
                                       );
                                     },

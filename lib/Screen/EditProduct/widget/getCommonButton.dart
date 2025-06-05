@@ -18,6 +18,8 @@ getCommonButton(
 ) {
   return InkWell(
     onTap: () {
+      print("dfgvhjnkm $index $title");
+
       if (index == 1) {
         Navigator.push(
           context,
@@ -31,7 +33,8 @@ getCommonButton(
         ).then(
           (value) => setState(),
         );
-      } else if (index == 2) {
+      }
+      else if (index == 2) {
         print("ebdhsn m ");
         Navigator.push(
           context,
@@ -45,7 +48,8 @@ getCommonButton(
         ).then(
           (value) => setState(),
         );
-      } else if (index == 3) {
+      }
+      else if (index == 3) {
         Navigator.push(
           context,
           CupertinoPageRoute<String>(
@@ -58,7 +62,8 @@ getCommonButton(
           editProvider!.description = changed;
           setState();
         });
-      } else if (index == 7) {
+      }
+      else if (index == 7) {
         Navigator.push(
           context,
           CupertinoPageRoute<String>(
@@ -70,7 +75,20 @@ getCommonButton(
           editProvider!.sortDescription = changed;
           setState();
         });
-      } else if (index == 4) {
+      }      else if (index == 9) {
+        Navigator.push(
+          context,
+          CupertinoPageRoute<String>(
+            builder: (context) => ProductDescription(
+                editProvider!.extraDescription ?? "",
+                getTranslated(context, "Add Extra Description")!),
+          ),
+        ).then((changed) {
+          editProvider!.extraDescription = changed;
+          setState();
+        });
+      }
+      else if (index == 4) {
         if (editProvider!.simpleProductPriceController.text.isEmpty) {
           setSnackbar(
             getTranslated(context, "Please enter product price")!,
@@ -99,7 +117,8 @@ getCommonButton(
           );
           setState();
         }
-      } else if (index == 5) {
+      }
+      else if (index == 5) {
         if (editProvider!.isStockSelected != null &&
             editProvider!.isStockSelected == true &&
             (editProvider!.variountProductTotalStock.text.isEmpty ||
@@ -114,7 +133,8 @@ getCommonButton(
               getTranslated(context, "Setting saved successfully")!, context);
           setState();
         }
-      } else if (index == 6) {
+      }
+      else if (index == 6) {
         editProvider!.variantProductVariableLevelSaveSettings = true;
         setSnackbar(
           getTranslated(context, "Setting saved successfully")!,

@@ -98,6 +98,7 @@ class FaQProvider extends ChangeNotifier {
             scrollLoadmore = false;
           }
           scrollLoadmore = false;
+
           update();
         } on TimeoutException catch (_) {
           setSnackbar(

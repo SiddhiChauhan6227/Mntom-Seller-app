@@ -236,8 +236,10 @@ class _AddFAQsState extends State<AddFAQs> with TickerProviderStateMixin {
                           Center(
                             child: InkWell(
                               onTap: () {
+
                                 if (faqProvider!.tagvalue != '' &&
-                                    faqProvider!.tagvalue != null) {
+                                    faqProvider!.tagvalue != null&& faqProvider!.ansValue != '' &&
+                                    faqProvider!.ansValue != null) {
                                   faqProvider!.tagList.clear();
                                   faqProvider!.scrollLoadmore = true;
 
@@ -259,7 +261,7 @@ class _AddFAQsState extends State<AddFAQs> with TickerProviderStateMixin {
                                   );
                                 } else {
                                   Navigator.pop(context);
-                                  setSnackbar(
+                                  showCenterDialog(
                                       getTranslated(context,
                                           "Please Add Questions Value")!,
                                       context);

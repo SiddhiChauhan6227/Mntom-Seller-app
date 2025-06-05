@@ -1804,8 +1804,31 @@ class _EditProductState extends State<EditProduct>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      getPrimaryCommanText(
-                          getTranslated(context, "Attributes")!, false),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        getPrimaryCommanText(
+                            getTranslated(context, "Attributes")!, false),
+                        SizedBox(width: 8,),
+                        Tooltip(
+                          message: getTranslated(context, "attributetooltip")!,
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.black87,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                          ),
+                          child:  Icon(Icons.info_outline,size: 20,),
+
+
+                        ),
+                      ],
+                    ),
+
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [

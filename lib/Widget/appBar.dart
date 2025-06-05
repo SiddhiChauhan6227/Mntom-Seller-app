@@ -4,41 +4,58 @@ import '../Helper/Color.dart';
 import '../Helper/Constant.dart';
 import '../Provider/settingProvider.dart';
 import 'desing.dart';
-
-getAppBar(
-  String title,
-  BuildContext context,
-) {
+AppBar getAppBar(
+    String title,
+    BuildContext context, {
+      bool isBackNeeded = true,
+      bool desc = false,
+    }) {
   return AppBar(
     titleSpacing: 0,
+    elevation:desc ? 0 : null,
+    // shadowColor: desc ? Colors.black.withOpacity(0.2) : null,
+    flexibleSpace: desc ?Container(
+      decoration: BoxDecoration(
+        color: secondary,
+      ),
+    ):null,
     backgroundColor: white,
     leading: Builder(
       builder: (BuildContext context) {
         return Container(
           margin: const EdgeInsets.all(10),
-          decoration: DesignConfiguration.shadow(),
-          child: InkWell(
+          decoration:desc ? BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: secondary,
+              )
+            ],
+          ): DesignConfiguration.shadow(),
+          child: isBackNeeded ? InkWell(
             borderRadius: BorderRadius.circular(circularBorderRadius5),
             onTap: () => Navigator.of(context).pop(),
-            child: const Center(
+            child:  Center(
               child: Icon(
                 Icons.keyboard_arrow_left,
-                color: primary,
+                color: desc?white:primary,
                 size: 30,
               ),
             ),
-          ),
+          ):SizedBox(),
         );
       },
     ),
-    title: Text(
-      title,
-      style: const TextStyle(
-        color: grad2Color,
+    title: Center(
+      child: Text(
+        title,
+        style:  TextStyle(
+          color: desc ? white :grad2Color,
+        ),
       ),
     ),
   );
 }
+
 
 class GradientAppBar extends StatelessWidget {
   final String title;

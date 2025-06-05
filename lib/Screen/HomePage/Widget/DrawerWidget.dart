@@ -561,7 +561,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               children: [
                 //==================
                 // when currentIndex == 0
-                //==================
+                  //==================
                 currentIndex == 0
                     ? Text(
                         getTranslated(context, "Delete Account")!,

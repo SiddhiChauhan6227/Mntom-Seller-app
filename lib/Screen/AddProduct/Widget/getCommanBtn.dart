@@ -45,6 +45,7 @@ getCommonButtonAdd(
           context,
           CupertinoPageRoute<String>(
             builder: (context) => ProductDescription(
+
               addProvider!.description ?? "",
               getTranslated(context, "Product Description")!,
             ),

@@ -8,6 +8,7 @@ import 'package:sellermultivendor/Screen/AddProduct/Add_Product.dart';
 import 'package:sellermultivendor/Screen/EditProduct/EditProduct.dart';
 import 'package:sellermultivendor/Screen/FAQ/faq.dart';
 import 'package:sellermultivendor/Screen/ProductList/widget/getCommanButton.dart';
+import 'package:sellermultivendor/Widget/snackbar.dart';
 import '../../Helper/Constant.dart';
 import '../../Model/ProductModel/Product.dart';
 import '../../Provider/ProductListProvider.dart';
@@ -321,6 +322,7 @@ class StateProduct extends State<ProductList>
                                           size: 18,
                                         ),
                                         onSelected: (dynamic value) {
+                                          print("fgyhunjm $value");
                                           switch (value) {
                                             case 0:
                                               return filterDialog();
@@ -1216,6 +1218,13 @@ class StateProduct extends State<ProductList>
   }
 
   void filterDialog() {
+    if(productListProvider!.filterList!.isEmpty){
+      setSnackbar(
+        getTranslated(context, "nofiltersasnoattributesdata")!,
+        context,
+      );
+    }
+    print("fvghjnk ${productListProvider!.filterList!.isNotEmpty}");
     if (productListProvider!.filterList!.isNotEmpty) {
       showModalBottomSheet(
         context: context,

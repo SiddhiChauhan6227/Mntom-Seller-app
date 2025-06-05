@@ -61,9 +61,9 @@ currentPage3(
           ),
         ],
       ),
-      editProvider!.showOtherImages.isNotEmpty
-          ? getCommanSizedBox()
-          : Container(),
+      // editProvider!.showOtherImages.isNotEmpty
+      //     ? getCommanSizedBox()
+      //     : Container(),
       editProvider!.showOtherImages.isNotEmpty
           ? getCommanSizedBox()
           : Container(),
@@ -182,7 +182,7 @@ selectedMainImageShow() {
 }
 
 uploadedOtherImageShow(Function update) {
-  print("tyghjk ${editProvider!.showOtherImages}");
+  print("tyghjk ${editProvider!.showOtherImages.length}");
   return editProvider!.showOtherImages.isEmpty
       ? Container()
       : SizedBox(

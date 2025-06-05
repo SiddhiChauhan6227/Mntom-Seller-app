@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 import '../../../../../../Helper/Color.dart';
@@ -15,154 +16,143 @@ import '../../../../../../Widget/validation.dart';
 import '../../../../Add_Product.dart';
 import '../../../getCommanWidget.dart';
 
-selectionPossitionOne(
-  BuildContext context,
-  Function setState,
-) {
-  return addProvider!.curSelPos == 1 &&
-          (addProvider!.digitalProductSaveSettings ||
-              addProvider!.simpleProductSaveSettings ||
-              addProvider!.variantProductVariableLevelSaveSettings ||
-              addProvider!.variantProductProductLevelSaveSettings)
-      ? Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            getCommanSizedBox(),
-            getCommanSizedBox(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                getPrimaryCommanText(
-                    getTranslated(context, "Attributes")!, false),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    OutlinedButton(
-                      onPressed: () {
-                        if (addProvider!.attributeIndiacator ==
-                            addProvider!.attrController.length) {
-                          addProvider!.attrController
-                              .add(TextEditingController());
-                          addProvider!.attrValController
-                              .add(TextEditingController());
-                          addProvider!.variationBoolList.add(false);
-                          setState(() {});
-                        } else {
-                          setSnackbar(
-                            getTranslated(
-                                context, "fill the box then add another")!,
-                            context,
-                          );
-                        }
-                      },
-                      child: Text(
-                        getTranslated(context, "Add Attribute")!,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    OutlinedButton(
-                      onPressed: () {
-                        addProvider!.tempAttList.clear();
-                        List<String> attributeIds = [];
-                        for (var i = 0;
-                            i < addProvider!.variationBoolList.length;
-                            i++) {
-                          if (addProvider!.variationBoolList[i]) {
-                            final attributes = addProvider!.attributesList
-                                .where((element) =>
-                                    element.name ==
-                                    addProvider!.attrController[i].text)
-                                .toList();
-                            if (attributes.isNotEmpty) {
-                              attributeIds.add(attributes.first.id!);
-                            }
-                          }
-                        }
-                        addProvider!.resultAttr = [];
-                        addProvider!.resultID = [];
-                        addProvider!.variationList = [];
-                        addProvider!.finalAttList = [];
-                        for (var key in attributeIds) {
-                          addProvider!.tempAttList
-                              .add(addProvider!.selectedAttributeValues[key]!);
-                        }
-                        for (int i = 0;
-                            i < addProvider!.tempAttList.length;
-                            i++) {
-                          addProvider!.finalAttList
-                              .add(addProvider!.tempAttList[i]);
-                        }
-                        if (addProvider!.finalAttList.isNotEmpty) {
-                          max = addProvider!.finalAttList.length - 1;
+int max = 0;
+int col = 0;
 
-                          getCombination([], [], 0);
-                          addProvider!.row = 1;
-                          col = max + 1;
-                          for (int i = 0; i < col; i++) {
-                            int singleRow = addProvider!.finalAttList[i].length;
-                            addProvider!.row = addProvider!.row * singleRow;
-                          }
-                        }
-                        setSnackbar(
-                          getTranslated(
-                              context, "Attributes saved successfully")!,
-                          context,
-                        );
-                        setState(() {});
-                      },
-                      child: Text(
-                        getTranslated(context, "Save Attribute")!,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
+Widget selectionPossitionOne(BuildContext context, Function setState) {
+  return addProvider!.curSelPos == 1 &&
+      (addProvider!.digitalProductSaveSettings ||
+          addProvider!.simpleProductSaveSettings ||
+          addProvider!.variantProductVariableLevelSaveSettings ||
+          addProvider!.variantProductProductLevelSaveSettings)
+      ? Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      getCommanSizedBox(),
+      getCommanSizedBox(),
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              getPrimaryCommanText(
+                  getTranslated(context, "Attributes")!, false),
+              SizedBox(width: 8),
+              Tooltip(
+                message: getTranslated(context, "attributetooltip")!,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.black87,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ],
-            ),
-            getCommanSizedBox(),
-            addProvider!.productType == 'variable_product'
-                ? Text(
-                    getTranslated(
+                textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                ),
+                child: Icon(Icons.info_outline, size: 20),
+              ),
+            ],
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  print(
+                      'Add Attribute clicked: attributeIndiacator = ${addProvider!.attributeIndiacator}, attrController.length = ${addProvider!.attrController.length}');
+                  if (addProvider!.attributeIndiacator ==
+                      addProvider!.attrController.length) {
+                    addProvider!.attrController.add(TextEditingController());
+                    addProvider!.attrValController.add(TextEditingController());
+                    addProvider!.variationBoolList.add(false);
+                    print(
+                        'Added new attribute: attrController.length = ${addProvider!.attrController.length}');
+                    setState(() {});
+                  } else {
+                    setSnackbar(
+                      getTranslated(context, "fill the box then add another")!,
                       context,
-                      "Note : select checkbox if the attribute is to be used for variation",
-                    )!,
-                  )
-                : Container(),
-            getCommanSizedBox(),
-            for (int i = 0; i < addProvider!.attrController.length; i++)
-              addAttribute(i, context, setState)
-          ],
-        )
+                    );
+                  }
+                },
+                child: Text(
+                  getTranslated(context, "Add Attribute")!,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              OutlinedButton(
+                onPressed: () {
+                  addProvider!.tempAttList.clear();
+                  List<String> attributeIds = [];
+                  for (var i = 0; i < addProvider!.variationBoolList.length; i++) {
+                    if (addProvider!.variationBoolList[i]) {
+                      final attributes = addProvider!.attributesList
+                          .where((element) =>
+                      element.name == addProvider!.attrController[i].text)
+                          .toList();
+                      if (attributes.isNotEmpty) {
+                        attributeIds.add(attributes.first.id!);
+                      }
+                    }
+                  }
+                  addProvider!.resultAttr = [];
+                  addProvider!.resultID = [];
+                  addProvider!.variationList = [];
+                  addProvider!.finalAttList = [];
+                  for (var key in attributeIds) {
+                    addProvider!.tempAttList
+                        .add(addProvider!.selectedAttributeValues[key]!);
+                  }
+                  for (int i = 0; i < addProvider!.tempAttList.length; i++) {
+                    addProvider!.finalAttList.add(addProvider!.tempAttList[i]);
+                  }
+                  if (addProvider!.finalAttList.isNotEmpty) {
+                    max = addProvider!.finalAttList.length - 1;
+                    getCombination([], [], 0);
+                    addProvider!.row = 1;
+                    col = max + 1;
+                    for (int i = 0; i < col; i++) {
+                      int singleRow = addProvider!.finalAttList[i].length;
+                      addProvider!.row = addProvider!.row * singleRow;
+                    }
+                  }
+                  setSnackbar(
+                    getTranslated(context, "Attributes saved successfully")!,
+                    context,
+                  );
+                  setState(() {});
+                },
+                child: Text(
+                  getTranslated(context, "Save Attribute")!,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      getCommanSizedBox(),
+      addProvider!.productType == 'variable_product'
+          ? Text(
+        getTranslated(
+          context,
+          "Note : select checkbox if the attribute is to be used for variation",
+        )!,
+      )
+          : Container(),
+      getCommanSizedBox(),
+      for (int i = 0; i < addProvider!.attrController.length; i++)
+        addAttribute(i, context, setState),
+    ],
+  )
       : Container();
 }
 
-getCombination(List<String> att, List<String> attId, int i) {
-  for (int j = 0, l = addProvider!.finalAttList[i].length; j < l; j++) {
-    List<String> a = [];
-    List<String> aId = [];
-    if (att.isNotEmpty) {
-      a.addAll(att);
-      aId.addAll(attId);
-    }
-    a.add(addProvider!.finalAttList[i][j].value!);
-    aId.add(addProvider!.finalAttList[i][j].id!);
-    if (i == max) {
-      addProvider!.resultAttr.addAll(a);
-      addProvider!.resultID.addAll(aId);
-      Product_Varient model =
-          Product_Varient(attr_name: a.join(","), id: aId.join(","));
-      addProvider!.variationList.add(model);
-    } else {
-      getCombination(a, aId, i + 1);
-    }
-  }
-}
 void deleteAttribute(int index, Function setState) {
   final attributeName = addProvider!.attrController[index].text;
-
   final result = addProvider!.attributesList
       .where((element) => element.name == attributeName)
       .toList();
@@ -173,22 +163,40 @@ void deleteAttribute(int index, Function setState) {
     addProvider!.attrValController.removeAt(index);
     addProvider!.variationBoolList.removeAt(index);
 
-    if (attributeId != null) {
-      addProvider!.selectedAttributeValues.remove(attributeId);
+    // Remove the corresponding attrId if it exists
+    if (index < addProvider!.attrId.length) {
+      addProvider!.attrId.removeAt(index);
+      print('Removed attrId at index $index. New attrId list: ${addProvider!.attrId}');
     }
 
-    // ✅ Fix: decrement indicator if necessary
-    if (addProvider!.attributeIndiacator > index) {
+    // Remove selected attribute values if attributeId exists
+    if (attributeId != null) {
+      addProvider!.selectedAttributeValues.remove(attributeId);
+      print('Removed selectedAttributeValues for attributeId: $attributeId');
+    }
+
+    // Adjust attributeIndiacator properly
+    if (addProvider!.attrController.isEmpty) {
+      addProvider!.attributeIndiacator = 0;
+      print('After deletion: List is empty, reset attributeIndiacator to 0');
+    } else if (addProvider!.attributeIndiacator > index) {
       addProvider!.attributeIndiacator--;
+      print(
+          'After deletion: Decremented attributeIndiacator to ${addProvider!.attributeIndiacator}, attrController.length: ${addProvider!.attrController.length}');
     } else if (addProvider!.attributeIndiacator >= addProvider!.attrController.length) {
-      // Optional: clamp it to the max length
       addProvider!.attributeIndiacator = addProvider!.attrController.length - 1;
+      print(
+          'After deletion: Clamped attributeIndiacator to ${addProvider!.attributeIndiacator}, attrController.length: ${addProvider!.attrController.length}');
+    }
+
+    if (addProvider!.attributeIndiacator < 0) {
+      addProvider!.attributeIndiacator = 0;
+      print('After deletion: Ensured attributeIndiacator is not negative, set to 0');
     }
   });
 }
 
-
-addAttribute(int pos, BuildContext context, Function setState) {
+Widget addAttribute(int pos, BuildContext context, Function setState) {
   final result = addProvider!.attributesList
       .where((element) => element.name == addProvider!.attrController[pos].text)
       .toList();
@@ -212,10 +220,8 @@ addAttribute(int pos, BuildContext context, Function setState) {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              getPrimaryCommanText(
-                  getTranslated(context, "Select Attribute")!, true),
+              getPrimaryCommanText(getTranslated(context, "Select Attribute")!, true),
               Container(
-
                 child: Row(
                   children: [
                     Checkbox(
@@ -231,8 +237,9 @@ addAttribute(int pos, BuildContext context, Function setState) {
                         deleteAttribute(pos, setState);
                       },
                     ),
-                  ],),           )
-
+                  ],
+                ),
+              ),
             ],
           ),
           getCommanSizedBox(),
@@ -250,17 +257,15 @@ addAttribute(int pos, BuildContext context, Function setState) {
             ),
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
-              filled: true,
-              fillColor: fillColor,
+              // filled: true,
+              // fillColor: fillColor,
               hintText: getTranslated(context, "Select Attributes")!,
               hintStyle: const TextStyle(
                 color: primary,
                 fontWeight: FontWeight.normal,
               ),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              prefixIconConstraints:
-                  const BoxConstraints(minWidth: 40, maxHeight: 20),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              prefixIconConstraints: const BoxConstraints(minWidth: 40, maxHeight: 20),
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(circularBorderRadius7),
@@ -275,72 +280,86 @@ addAttribute(int pos, BuildContext context, Function setState) {
           getCommanSizedBox(),
           GestureDetector(
             onTap: () {
+              print("dfvgh $attributeId");
+              if (attributeId!.isEmpty) {
+                setSnackbar(
+                  getTranslated(context, "Please select an attribute first")!,
+                  context,
+                );
+                return;
+              }
               final attributeValues = addProvider!.attributesValueList
                   .where((element) => element.attributeId == attributeId)
                   .toList();
-              addValAttribute(
-                  addProvider!.selectedAttributeValues[attributeId]!,
-                  attributeValues,
-                  attributeId!,
+              if (attributeValues.isEmpty) {
+                setSnackbar(
+                  getTranslated(context, "No attribute values available")!,
                   context,
-                  setState);
+                );
+                return;
+              }
+              addValAttribute(
+                addProvider!.selectedAttributeValues[attributeId] ?? [],
+                attributeValues,
+                attributeId,
+                context,
+                setState,
+              );
             },
             child: Container(
               width: width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(circularBorderRadius7),
-                color: fillColor,
+                // color: fillColor,
               ),
               constraints: const BoxConstraints(
                 minHeight: 50,
               ),
-              child: (addProvider!.selectedAttributeValues[attributeId!] ?? [])
-                      .isEmpty
+              child: (addProvider!.selectedAttributeValues[attributeId] ?? []).isEmpty
                   ? Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Center(
+                padding: const EdgeInsets.all(12.0),
+                child: Center(
+                  child: Text(
+                    getTranslated(context, "Add attribute value")!,
+                    style: const TextStyle(
+                      color: primary,
+                      fontSize: textFontSize16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              )
+                  : Wrap(
+                alignment: WrapAlignment.center,
+                direction: Axis.horizontal,
+                children: addProvider!.selectedAttributeValues[attributeId]!
+                    .map(
+                      (value) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        BorderRadius.circular(circularBorderRadius10),
+                        color: primary_app,
+                        border: Border.all(
+                          color: Colors.transparent,
+                          width: 0.5,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          getTranslated(context, "Add attribute value")!,
+                          value.value!,
                           style: const TextStyle(
-                            color: primary,
-                            fontSize: textFontSize16,
-                            fontWeight: FontWeight.normal,
+                            color: white,
                           ),
                         ),
                       ),
-                    )
-                  : Wrap(
-                      alignment: WrapAlignment.center,
-                      direction: Axis.horizontal,
-                      children:
-                          addProvider!.selectedAttributeValues[attributeId]!
-                              .map(
-                                (value) => Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          circularBorderRadius10),
-                                      color: primary_app,
-                                      border: Border.all(
-                                        color: Colors.transparent,
-                                        width: 0.5,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        value.value!,
-                                        style: const TextStyle(
-                                          color: white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
                     ),
+                  ),
+                )
+                    .toList(),
+              ),
             ),
           ),
           getCommanSizedBox(),
@@ -350,10 +369,29 @@ addAttribute(int pos, BuildContext context, Function setState) {
   );
 }
 
-//------------------------------------------------------------------------------
-//============================ attributeDialog ===================================
+void getCombination(List<String> att, List<String> attId, int i) {
+  for (int j = 0, l = addProvider!.finalAttList[i].length; j < l; j++) {
+    List<String> a = [];
+    List<String> aId = [];
+    if (att.isNotEmpty) {
+      a.addAll(att);
+      aId.addAll(attId);
+    }
+    a.add(addProvider!.finalAttList[i][j].value!);
+    aId.add(addProvider!.finalAttList[i][j].id!);
+    if (i == max) {
+      addProvider!.resultAttr.addAll(a);
+      addProvider!.resultID.addAll(aId);
+      Product_Varient model =
+      Product_Varient(attr_name: a.join(","), id: aId.join(","));
+      addProvider!.variationList.add(model);
+    } else {
+      getCombination(a, aId, i + 1);
+    }
+  }
+}
 
-attributeDialog(int pos, BuildContext context, Function setState) async {
+Future<void> attributeDialog(int pos, BuildContext context, Function setState) async {
   await showModalBottomSheet(
     isScrollControlled: true,
     context: context,
@@ -403,171 +441,110 @@ attributeDialog(int pos, BuildContext context, Function setState) async {
                       addProvider!.suggessionisNoData
                           ? DesignConfiguration.getNoItem(context)
                           : SizedBox(
-                              width: double.maxFinite,
-                              height: addProvider!.attributeSetList.isNotEmpty
-                                  ? MediaQuery.of(context).size.height * 0.3
-                                  : 0,
-                              child: SingleChildScrollView(
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount:
-                                      addProvider!.attributeSetList.length,
-                                  itemBuilder: (context, index) {
-                                    // print("yuhol $")
-                                    List<AttributeModel> attrList = [];
-
-                                    AttributeSetModel item = addProvider!.attributeSetList[index];
-
-                                    for (int i = 0; i < addProvider!.attributesList.length; i++) {
-                                      if (item.id == addProvider!.attributesList[i].attributeSetId) {
-                                        attrList.add(addProvider!.attributesList[i]);
-                                      }
-                                    }
-                                    return Material(
-                                      child: StickyHeaderBuilder(
-                                        builder: (BuildContext context,
-                                            double stuckAmount) {
-                                          return Container(
-                                            decoration: BoxDecoration(
-                                                color: primary,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        circularBorderRadius5)),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0, vertical: 2),
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              addProvider!
-                                                      .attributeSetList[index]
-                                                      .name ??
-                                                  '',
-                                              style: const TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          );
-                                        },
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: List<int>.generate(
-                                              attrList.length, (i) => i).map(
-                                            (item) {
-                                              return InkWell(
-                                                onTap: (){
-                                                  print("vgbhjn ${ addProvider!.attrId.length}");
-                                                  final selectedAttrId = int.parse(attrList[item].id!);
-                                                  final selectedAttrName = attrList[item].name!;
-
-// Check if this attribute name is already used in any other controller
-                                                  bool isDuplicate = addProvider!.attrController
-                                                      .asMap()
-                                                      .entries
-                                                      .any((entry) => entry.key != pos && entry.value.text == selectedAttrName);
-
-                                                  if (isDuplicate) {
-                                                    setSnackbar(getTranslated(context, "Already inserted..")!, context);
-                                                    Navigator.pop(context);
-                                                    return;
-                                                  }
-
-// Replace old ID (if any)
-                                                  if (pos < addProvider!.attrId.length) {
-
-                                                    addProvider!.attrId[pos] = selectedAttrId;
-                                                  } else {
-                                                    addProvider!.attrId.add(selectedAttrId);
-                                                  }
-
-                                                  setState(() {
-                                                    addProvider!.attrController[pos].text = selectedAttrName;
-                                                    addProvider!.attributeIndiacator = pos + 1;
-                                                  });
-                                                  Navigator.pop(context);
-
-                                                },
-                                                // onTap: () {
-                                                //   final selectedAttrId =
-                                                //       int.parse(
-                                                //           attrList[item].id!);
-                                                //   if (addProvider!.attrId
-                                                //       .contains(
-                                                //           selectedAttrId)) {
-                                                //     // Show already inserted message
-                                                //     Navigator.pop(context);
-                                                //     setSnackbar(
-                                                //       getTranslated(context,
-                                                //           "Already inserted..")!,
-                                                //       context,
-                                                //     );
-                                                //   } else {
-                                                //     // Add the item and update the controller
-                                                //     addProvider!
-                                                //             .attrController[pos]
-                                                //             .text =
-                                                //         attrList[item].name!;
-                                                //     addProvider!
-                                                //             .attributeIndiacator =
-                                                //         pos + 1;
-                                                //     addProvider!.attrId
-                                                //         .add(selectedAttrId);
-                                                //     Routes.pop(context);
-                                                //     setState(() {});
-                                                //   }
-                                                // },
-
-                                                // onTap: () {
-                                                //   addProvider!
-                                                //           .attrController[pos]
-                                                //           .text =
-                                                //       attrList[item].name!;
-                                                //   addProvider!
-                                                //           .attributeIndiacator =
-                                                //       pos + 1;
-                                                //   if (addProvider!.attrId
-                                                //       .contains(int.parse(
-                                                //           attrList[item]
-                                                //               .id!))) {
-                                                //     addProvider!.attrId.add(
-                                                //         int.parse(attrList[item]
-                                                //             .id!));
-                                                //     Routes.pop(context);
-                                                //   } else {
-                                                //     Navigator.pop(context);
-                                                //     setSnackbar(
-                                                //       getTranslated(context,
-                                                //           "Already inserted..")!,
-                                                //       context,
-                                                //     );
-                                                //   }
-                                                //   setState(() {});
-                                                // },
-                                                child: Container(
-                                                  width: double.maxFinite,
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    children: [
-                                                      Text(
-                                                        attrList[item].name ?? '',
-                                                        textAlign: TextAlign.start,
-                                                      ),
-                                                      Spacer(),
-                                                      if(addProvider!.attrId.contains(int.parse(attrList[item].id!))) Icon(Icons.check)
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ).toList(),
-                                        ),
+                        width: double.maxFinite,
+                        height: addProvider!.attributeSetList.isNotEmpty
+                            ? MediaQuery.of(context).size.height * 0.3
+                            : 0,
+                        child: SingleChildScrollView(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: addProvider!.attributeSetList.length,
+                            itemBuilder: (context, index) {
+                              List<AttributeModel> attrList = [];
+                              AttributeSetModel item =
+                              addProvider!.attributeSetList[index];
+                              for (int i = 0;
+                              i < addProvider!.attributesList.length;
+                              i++) {
+                                if (item.id ==
+                                    addProvider!.attributesList[i].attributeSetId) {
+                                  attrList.add(addProvider!.attributesList[i]);
+                                }
+                              }
+                              return Material(
+                                child: StickyHeaderBuilder(
+                                  builder: (BuildContext context, double stuckAmount) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                          color: primary,
+                                          borderRadius:
+                                          BorderRadius.circular(circularBorderRadius5)),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0, vertical: 2),
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        addProvider!.attributeSetList[index].name ?? '',
+                                        style: const TextStyle(color: Colors.white),
                                       ),
                                     );
                                   },
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: List<int>.generate(attrList.length, (i) => i).map(
+                                          (item) {
+                                        return InkWell(
+                                          onTap: () {
+                                            print(
+                                                'Attribute selected at pos $pos: attributeIndiacator = ${addProvider!.attributeIndiacator}, attrController.length = ${addProvider!.attrController.length}');
+                                            final selectedAttrId =
+                                            int.parse(attrList[item].id!);
+                                            final selectedAttrName = attrList[item].name!;
+                                            bool isDuplicate = addProvider!.attrController
+                                                .asMap()
+                                                .entries
+                                                .any((entry) =>
+                                            entry.key != pos &&
+                                                entry.value.text == selectedAttrName);
+                                            if (isDuplicate) {
+                                              setSnackbar(
+                                                  getTranslated(
+                                                      context, "Already inserted..")!,
+                                                  context);
+                                              Navigator.pop(context);
+                                              return;
+                                            }
+                                            if (pos < addProvider!.attrId.length) {
+                                              addProvider!.attrId[pos] = selectedAttrId;
+                                            } else {
+                                              addProvider!.attrId.add(selectedAttrId);
+                                            }
+                                            setState(() {
+                                              addProvider!.attrController[pos].text =
+                                                  selectedAttrName;
+                                              addProvider!.attributeIndiacator = pos + 1;
+                                              print(
+                                                  'After selection: attributeIndiacator set to ${addProvider!.attributeIndiacator}, attrController.length = ${addProvider!.attrController.length}');
+                                            });
+                                            Navigator.pop(context);
+                                          },
+                                          child: Container(
+                                            width: double.maxFinite,
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  attrList[item].name ?? '',
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                                Spacer(),
+                                                if (addProvider!.attrId
+                                                    .contains(int.parse(attrList[item].id!)))
+                                                  Icon(Icons.check),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
                                 ),
-                              ),
-                            ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -580,13 +557,14 @@ attributeDialog(int pos, BuildContext context, Function setState) async {
   );
 }
 
-addValAttribute(
-  List<AttributeValueModel> selected,
-  List<AttributeValueModel> searchRange,
-  String attributeId,
-  BuildContext context,
-  Function update,
-) {
+void addValAttribute(
+    List<AttributeValueModel> selected,
+    List<AttributeValueModel> searchRange,
+    String attributeId,
+    BuildContext context,
+    Function update,
+    ) {
+  addProvider!.selectedAttributeValues.putIfAbsent(attributeId, () => []);
   showModalBottomSheet<List<AttributeValueModel>>(
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
@@ -635,7 +613,7 @@ addValAttribute(
                 crossAxisSpacing: 5.0,
               ),
               delegate: SliverChildBuilderDelegate(
-                (context, index) {
+                    (context, index) {
                   return filterChipWidget(
                     chipName: searchRange[index],
                     selectedList: selected,
