@@ -115,22 +115,58 @@ class _GetMediaWidgetState extends State<GetMediaWidget> {
                                     child: Text(getTranslated(context, "Cancel")!),
                                   ),
                                   TextButton(
-                                    onPressed: () {
-                                      Navigator.of(dialogContext).pop(); // close dialog
-                                      faqProvider!.deleteTagsAPI(
-                                        faqProvider!.tagList[widget.index].id,
-                                        context,
-                                      );
-                                      faqProvider!.scrollGettingData = false;
-                                      Future.delayed(const Duration(seconds: 2)).then(
-                                            (_) async {
-                                          faqProvider!.scrollLoadmore = false;
-                                          faqProvider!.scrollOffset = 0;
-                                          faqProvider!.getFaQs(context, widget.update, widget.id);
-                                          widget.update();
-                                        },
-                                      );
-                                    },
+                              onPressed: () async {
+                              Navigator.of(dialogContext).pop();
+
+                              try {
+                              await faqProvider!.deleteTagsAPI(
+                              faqProvider!.tagList[widget.index].id,
+                              context,
+                              update: widget.update,
+                              productId: widget.id,
+                              );
+
+                              if (!mounted) return;
+
+                              if (faqProvider!.tagList.isEmpty) {
+                              faqProvider!.scrollGettingData = false;
+                              faqProvider!.scrollLoadmore = false;
+                              }
+
+                              widget.update(); // parent setState
+                              setState(() {}); // local update
+                              } catch (error) {
+                              if (!mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Failed to delete: $error')),
+                              );
+                              }
+                              }
+,
+                              // onPressed: () async {
+                                    //   Navigator.of(dialogContext).pop();
+                                    //
+                                    //   try {
+                                    //     // Delete from API with proper parameters
+                                    //     await faqProvider!.deleteTagsAPI(
+                                    //       faqProvider!.tagList[widget.index].id,
+                                    //       context,
+                                    //       update: widget.update,
+                                    //       productId: widget.id,
+                                    //     );
+                                    //
+                                    //     // Additional UI update to ensure refresh
+                                    //     if (mounted) {
+                                    //       widget.update();
+                                    //       setState(() {});
+                                    //     }
+                                    //
+                                    //   } catch (error) {
+                                    //     ScaffoldMessenger.of(context).showSnackBar(
+                                    //       SnackBar(content: Text('Failed to delete: $error')),
+                                    //     );
+                                    //   }
+                                    // },
                                     child: Text(
                                       getTranslated(context, "Delete")!,
                                       style: const TextStyle(color: Colors.red),

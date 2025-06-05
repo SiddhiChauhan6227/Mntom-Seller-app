@@ -147,9 +147,10 @@ class FaQProvider extends ChangeNotifier {
   }
 
   Future<void> deleteTagsAPI(
-    String? id,
-    BuildContext context,
-  ) async {
+      String? id,
+      BuildContext context,
+      {Function? update, String? productId}
+      ) async {
     context.read<SettingProvider>().CUR_USERID = await getPrefrence(Id);
     var parameter = {
       SellerId: context.read<SettingProvider>().CUR_USERID,
@@ -162,8 +163,27 @@ class FaQProvider extends ChangeNotifier {
     String? msg = result["message"];
     if (!error) {
       setSnackbar(msg!, context);
+
+      // Completely reset everything for fresh data
       tagList.clear();
+      tempList.clear();
+      listController.clear();
+      selectedList.clear();
+
+      // Reset all pagination flags
+      scrollOffset = 0;
       scrollLoadmore = true;
+      scrollGettingData = false;
+      scrollNodata = false;
+
+      // Notify listeners immediately
+      notifyListeners();
+
+      // Force refresh the list if parameters provided
+      if (productId != null && update != null) {
+        await getFaQs(context, update, productId);
+      }
+
     } else {
       setSnackbar(msg!, context);
     }

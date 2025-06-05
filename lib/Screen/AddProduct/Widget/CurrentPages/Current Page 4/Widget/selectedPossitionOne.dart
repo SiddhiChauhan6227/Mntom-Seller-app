@@ -10,7 +10,6 @@ import '../../../../../../Model/ProductModel/Variants.dart';
 import '../../../../../../Provider/settingProvider.dart';
 import '../../../../../../Widget/FilterChips.dart';
 import '../../../../../../Widget/desing.dart';
-import '../../../../../../Widget/routes.dart';
 import '../../../../../../Widget/snackbar.dart';
 import '../../../../../../Widget/validation.dart';
 import '../../../../Add_Product.dart';
