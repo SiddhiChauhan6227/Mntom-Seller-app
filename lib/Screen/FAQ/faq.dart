@@ -606,15 +606,14 @@ class _AddFAQsState extends State<AddFAQs> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                faqProvider!.scrollGettingData
-                    ? const Padding(
-                        padding: EdgeInsetsDirectional.only(
-                          top: 5,
-                          bottom: 5,
-                        ),
-                        child: Center(child: CircularProgressIndicator()),
-                      )
-                    : Container(),
+              !faqProvider!.scrollNodata ?
+              faqProvider!.scrollGettingData ? Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    top: 5,
+                    bottom: 5,
+                  ),
+                  child: Center(child: CircularProgressIndicator()),
+                ):Container():DesignConfiguration.getNoDataImage(context),
               ],
             ),
           );

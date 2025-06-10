@@ -174,7 +174,7 @@ class FaQProvider extends ChangeNotifier {
       scrollOffset = 0;
       scrollLoadmore = true;
       scrollGettingData = false;
-      scrollNodata = false;
+      scrollNodata = true;
 
       // Notify listeners immediately
       notifyListeners();
