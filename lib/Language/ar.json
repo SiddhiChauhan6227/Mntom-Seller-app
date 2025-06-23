@@ -561,7 +561,7 @@
   "Order Cancelled": "تم إلغاء الطلب",
   "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin": "أدخل كود المستودع المقدم من المسؤول. إذا لم تتلق واحدًا، يرجى التواصل مع المسؤول.",
   "please fill the required fields": "يرجى ملء الحقول المطلوبة",
-  "Commercial register or self-employment document": "السجل التجاري أو وثيقة العمل الحر",
+  "Commercial register or self-employment document": "السجل التجاري أو\n وثيقة العمل الحر",
   "Total Weight of Box": "الوزن الإجمالي للصندوق",
   "Otostore": "متجر أوتو"
 

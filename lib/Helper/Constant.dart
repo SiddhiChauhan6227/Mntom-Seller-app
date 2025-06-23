@@ -27,7 +27,7 @@ String defaultCountryCode = 'IN';
 
 const String baseUrl = 'https://taskhub.company/Turkey_Altwani/seller/app/v1/api/';
 const String jwtKey = "8e52d232d1bd7a1af587047e01aaca513032a63a";
-const String chatBaseUrl = 'https://mntom.online/seller/app/v1/Chat_Api/';
+const String chatBaseUrl = 'https://taskhub.company/Turkey_Altwani/seller/app/v1/Chat_Api/';
 
 const double allowableTotalFileSizesInChatMediaInMB = 15.0;
 

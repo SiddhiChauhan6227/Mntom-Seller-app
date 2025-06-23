@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sellermultivendor/Model/otoStore/otoStoreModel.dart';
 import 'package:sellermultivendor/Widget/snackbar.dart';
 
@@ -65,7 +66,6 @@ class _OtoStoreState extends State<OtoStore> {
                 color: white,
               ),
               onPressed: () => _openCreateOtoManagement(context),
-
             ),
           ),
         ),
@@ -99,141 +99,194 @@ class _OtoStoreState extends State<OtoStore> {
             left: 16,
             right: 16,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(getTranslated(context, 'oto Manangement')!,
-                  style: TextStyle(fontSize: 18)),
-              SizedBox(height: 10),
-              Row(
+          child: BlocListener<OtoStoreBloc, OtoStoreState>(
+              listener: (context, state) {
+                if (state is OtoStoreCreateSuccess) {
+                  // Clear after adding successfully
+                  warehouseCodeController.clear();
+                  storeNameController.clear();
+                  Fluttertoast.showToast(
+                    msg: "Store added successfully", // your message
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: secondary,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                } else if (state is OtoStoreCreateError) {
+                  Fluttertoast.showToast(
+                    msg: state.errorMessage ?? "Failed to add store.",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.black87,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                }
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  getPrimaryCommanText(
-                      getTranslated(context, "Store Name")!, false),
-                  const Text(
-                    " *",
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              getTextFields(storeNameController, false),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  getPrimaryCommanText(
-                      getTranslated(context, "Warehouse City")!, false),
-                  const Text(
-                    " *",
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              getTextFields(warehouseCityController, true),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  getPrimaryCommanText(
-                    getTranslated(context, "Warehouse Code")!,
-                    false,
-                  ),
-                  const Text(
-                    " *",
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  )
-                ],
-              ),
-              Text(
-                getTranslated(context,
-                    "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin")!,
-                style: const TextStyle(
-                  fontSize: textFontSize16,
-                  color: grey,
-                ),
-                overflow: TextOverflow.ellipsis,
-                softWrap: true,
-                maxLines: 5,
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              getTextFields(warehouseCodeController, false),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      if (warehouseCodeController.text.isNotEmpty &&
-                          storeNameController.text.isNotEmpty) {
-                        OtoStoreModel oto = OtoStoreModel(
-                            warehouseCode:
-                                int.parse(warehouseCodeController.text),
-                            warehouseCity: warehouseCity,
-                            storeName: storeNameController.text,
-                            sellerId:
-                                context.read<SettingProvider>().currentUerID);
-                        context.read<OtoStoreBloc>().add(AddOtoStore(oto));
-                      } else {
-                        setSnackbar(
-                            getTranslated(
-                                context, "please fill the required fields")!,
-                            context);
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero, // Remove default padding
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12), // Button shape
-                      ),
-                      elevation: 0, // Optional: no shadow
-                      backgroundColor: Colors
-                          .transparent, // Make transparent to see gradient
-                    ),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [grad1Color, grad2Color],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          stops: [0, 1],
-                          tileMode: TileMode.clamp,
+                  Text(getTranslated(context, 'oto Manangement')!,
+                      style: TextStyle(fontSize: 18)),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      getPrimaryCommanText(
+                          getTranslated(context, "Store Name")!, false),
+                      const Text(
+                        " *",
+                        style: TextStyle(
+                          color: Colors.red,
                         ),
-                        borderRadius: BorderRadius.circular(12),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  getTextFields(storeNameController, false, false),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      getPrimaryCommanText(
+                          getTranslated(context, "Warehouse City")!, false),
+                      const Text(
+                        " *",
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  getTextFields(warehouseCityController, true, false),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      getPrimaryCommanText(
+                        getTranslated(context, "Warehouse Code")!,
+                        false,
                       ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 14, horizontal: 24),
-                        child: Text(
-                          'Add Store',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                      const Text(
+                        " *",
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                      )
+                    ],
+                  ),
+                  Text(
+                    getTranslated(context,
+                        "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin")!,
+                    style: const TextStyle(
+                      fontSize: textFontSize16,
+                      color: grey,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    maxLines: 5,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  getTextFields(warehouseCodeController, false, true),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          if (warehouseCodeController.text.isNotEmpty &&
+                              storeNameController.text.isNotEmpty) {
+                            int? warehouseCodeInt;
+                            try {
+                              warehouseCodeInt =
+                                  int.parse(warehouseCodeController.text);
+                            } catch (e) {
+                              Fluttertoast.showToast(
+                                msg: "Warehouse Code must of numbers", // your message
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black87,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                              return;
+                            }
+
+                            OtoStoreModel oto = OtoStoreModel(
+                              warehouseCode: warehouseCodeInt,
+                              warehouseCity: warehouseCity,
+                              storeName: storeNameController.text,
+                              sellerId:
+                                  context.read<SettingProvider>().currentUerID,
+                            );
+
+                            context.read<OtoStoreBloc>().add(AddOtoStore(oto));
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: getTranslated(context,
+                                  "please fill the required fields")!, // your message
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black87,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero, // Remove default padding
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(12), // Button shape
+                          ),
+                          elevation: 0, // Optional: no shadow
+                          backgroundColor: Colors
+                              .transparent, // Make transparent to see gradient
+                        ),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [grad1Color, grad2Color],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              stops: [0, 1],
+                              tileMode: TileMode.clamp,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 14, horizontal: 24),
+                            child: Text(
+                              'Add Store',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
+                  SizedBox(height: 16),
                 ],
-              ),
-              SizedBox(height: 16),
-            ],
-          ),
+              )),
         );
       },
     );
@@ -330,25 +383,28 @@ class _OtoStoreState extends State<OtoStore> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              oto.storeLogo!= "" ?  Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                    image: NetworkImage(oto.storeLogo!),
-                                    fit: BoxFit
-                                        .cover, // or BoxFit.fill, BoxFit.contain, etc.
-                                  ),
-                                ),
-                              ):Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                 color: Colors.grey.withValues(alpha: 0.4)
-                                ),
-                              ),
+                              oto.storeLogo != ""
+                                  ? Container(
+                                      height: 100,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                          image: NetworkImage(oto.storeLogo!),
+                                          fit: BoxFit
+                                              .cover, // or BoxFit.fill, BoxFit.contain, etc.
+                                        ),
+                                      ),
+                                    )
+                                  : Container(
+                                      height: 100,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Colors.grey
+                                              .withValues(alpha: 0.4)),
+                                    ),
                               SizedBox(
                                 width: 10,
                               ),
@@ -452,7 +508,7 @@ class _OtoStoreState extends State<OtoStore> {
     );
   }
 
-  getTextFields(controller, readOnly) {
+  getTextFields(controller, readOnly, isNumeric) {
     return Container(
       decoration: BoxDecoration(
         color: readOnly ? Colors.grey.withValues(alpha: 0.4) : grey1,
@@ -478,7 +534,7 @@ class _OtoStoreState extends State<OtoStore> {
             fontWeight: FontWeight.normal,
           ),
           controller: controller,
-          keyboardType: TextInputType.text,
+          keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
           onChanged: (value) {},
           validator: (val) => () {}(),
           decoration: InputDecoration(

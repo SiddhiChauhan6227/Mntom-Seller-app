@@ -561,7 +561,7 @@
   "Order Cancelled": "Заказ отменен",
   "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin": "Введите код склада, предоставленный администратором. Если вы не получили код, пожалуйста, свяжитесь с администратором.",
   "please fill the required fields": "Пожалуйста, заполните обязательные поля",
-  "Commercial register or self-employment document": "Коммерческий реестр или документ о самозанятости",
+  "Commercial register or self-employment document": "Коммерческий реестр или \nдокумент о самозанятости",
   "Total Weight of Box": "Общий вес коробки",
   "Otostore": "Магазин OTO"
 

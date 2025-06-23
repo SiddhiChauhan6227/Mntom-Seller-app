@@ -561,7 +561,7 @@
   "Order Cancelled": "Bestellung storniert",
   "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin": "Geben Sie den vom Administrator bereitgestellten Lagercode ein. Wenn Sie keinen erhalten haben, kontaktieren Sie bitte den Administrator.",
   "please fill the required fields": "Bitte füllen Sie die erforderlichen Felder aus",
-  "Commercial register or self-employment document": "Handelsregister oder Dokument der Selbstständigkeit",
+  "Commercial register or self-employment document": "Handelsregister oder Dokument \nder Selbstständigkeit",
   "Total Weight of Box": "Gesamtgewicht der Box",
   "Otostore": "OTO-Shop"
 

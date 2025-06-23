@@ -494,28 +494,22 @@ class _SellerRegisterState extends State<SellerRegister>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            flex: 2,
-            child: Text(
-              title,
-            ),
+          Text(
+            title,
           ),
           InkWell(
-            child: Expanded(
-              flex: 10,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: primary,
-                  borderRadius: BorderRadius.circular(circularBorderRadius5),
-                ),
-                width: 90,
-                height: 40,
-                child: Center(
-                  child: Text(
-                    getTranslated(context, "Upload")!,
-                    style: const TextStyle(
-                      color: white,
-                    ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: primary,
+                borderRadius: BorderRadius.circular(circularBorderRadius5),
+              ),
+              width: 90,
+              height: 40,
+              child: Center(
+                child: Text(
+                  getTranslated(context, "Upload")!,
+                  style: const TextStyle(
+                    color: white,
                   ),
                 ),
               ),

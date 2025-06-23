@@ -568,7 +568,7 @@
   "Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin":
   "(Enter the warehouse code provided by the admin. If you haven't received one, please contact the admin.)",
 "please fill the required fields": "Please fill the required field(s)",
-  "Commercial register or self-employment document": "Commercial register or self-employment document",
+  "Commercial register or self-employment document": "Commercial register or \nself-employment document",
   "Total Weight of Box": "Total Weight of Box",
   "Product Type": "Product Type",
   "HSN code": "HSN Code",
@@ -579,5 +579,6 @@
   "Are you sure you want to disable this product?": "Are you sure you want to disable this product?",
   "Disable": "Disable",
   "attributetooltip": "This attribute will be used to create product variations.",
-  "nofiltersasnoattributesdata": "No Attributes in any of items!"
+  "nofiltersasnoattributesdata": "No Attributes in any of items!",
+  "Warehousecodemustbeanumber": "Warehouse code must be a number"
 }

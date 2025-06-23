@@ -652,13 +652,13 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                           )
                                         : Container(),
 
-
+//OTO CREATE ROW
                                     Container(
                                       width: double.infinity,
                                       child: Row(
                                         children: [
                                           Flexible(
-                                            flex: 10, // Assign flex 10 to Create oto Order
+                                            flex: 10,
                                             child: Padding(
                                               padding: const EdgeInsets.symmetric(vertical: 10),
                                               child: Padding(
@@ -1167,7 +1167,129 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                               ],
                                             ),
                                           ),
+                                    Row(
+                                    mainAxisAlignment:  MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(5),
+                                              color: (() {
+                                                // Set background color based on cancellation condition
+                                                if (isCancelledOrder == "1" || isCancelledShipment == "1") {
+                                                  return Colors.red; // Red color for "Cancelled"
+                                                } else {
+                                                  return primary; // Default color
+                                                }
+                                              })(),
+                                            ),
+                                            padding: const EdgeInsets.all(7),
+                                            child: Text(
+                                              (() {
+                                                if (isCancelledOrder == "1") {
+                                                  return getTranslated(context, 'Order Cancelled')!;
+                                                } else if (isCancelledShipment == "1" && isCancelledOrder == "0") {
+                                                  return getTranslated(context, 'Shipment Cancelled')!;
+                                                } else if (otoOrderId != ""&& shipmentId == "") {
+                                                  return getTranslated(context, 'Order Created')!;
+                                                }  else if (shipmentId != "") {
+                                                  return getTranslated(context, 'Shipment created')!;
+                                                }
+                                                else {
+                                                  return getTranslated(context, 'Shipment created')!;
+                                                }
+                                              })(),
+                                              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white),
+                                            ),
+                                          ),
+                                          shipmentId ==
+                                              "" && otoOrderId !=""
+                                              ? Padding(
+                                            padding:
+                                            const EdgeInsetsDirectional.only(start: 10.0),
+                                            child: CommonRowBtn(
+                                                title: 'Send pickup request',
+                                                onBtnSelected: () {
+                                                  commonDialogue(context, getTranslated(context, 'Do you want to create shippment?')!, () {
+                                                    createOtoShipment();
 
+                                                    Routes.pop(context);
+                                                  });
+                                                }),
+                                          )
+                                              : const SizedBox
+                                              .shrink(),
+                                          otoOrderId !=
+                                              "" && isCancelledOrder == "0"
+                                              ? Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .only(
+                                                start:
+                                                10.0),
+                                            child: CommonRowBtn(
+                                                title: 'Cancel order',
+                                                onBtnSelected: () {
+                                                  commonDialogue(
+                                                      context,
+                                                      getTranslated(context, 'Do you want to cancel order?')!,
+                                                          () {
+                                                        cancelOtoOrder();
+
+                                                        Routes.pop(context);
+                                                      });
+                                                }),
+                                          ):SizedBox.shrink(),
+                                          shipmentId !=
+                                              ""&& isCancelledShipment == "0"
+                                              ? Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .only(
+                                                start:
+                                                10.0),
+                                            child: CommonRowBtnPng(
+                                                title: 'Cancel shipment',
+                                                onBtnSelected: () {
+                                                  print("fhksdn ");
+                                                  commonDialogue(
+                                                      context,
+                                                      getTranslated(context, 'Do you want to cancel shipment?')!,
+                                                          () {
+                                                        cancelOtoShipment();
+
+                                                        Routes.pop(context);
+                                                      });
+                                                }),
+                                          ):SizedBox.shrink(),
+                                          if (shipmentId !=
+                                              ""
+                                          )
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .only(
+                                                  start:
+                                                  10.0),
+                                              child: CommonRowBtnPng(
+                                                  title: 'Download AWB',
+                                                  onBtnSelected: () {
+                                                    // getWafeqOrderInvoice();
+                                                    downloadAwb();
+                                                    // downloadInvoice(trackingModel!.shipmentId!);
+                                                  }),
+                                            ),
+                                          if (shipmentId !=
+                                              ""
+                                          )
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .only(
+                                                  start:
+                                                  10.0),
+                                              child: CommonRowBtnPng(
+                                                  title: 'Tracking',
+                                                  onBtnSelected: () {
+                                                    otoOrderTracking();
+                                                  }),
+                                            ),
+                                        ]),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -1222,133 +1344,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                   if (pickUpLocationList[j] !=
                                                       "")
 
-                                                  SingleChildScrollView(
-                                                            scrollDirection:
-                                                                Axis.horizontal,
-                                                            child: Row(
 
-                                                                children: [
-                                                                  Container(
-                                                                    decoration: BoxDecoration(
-                                                                      borderRadius: BorderRadius.circular(5),
-                                                                      color: (() {
-                                                                        // Set background color based on cancellation condition
-                                                                        if (isCancelledOrder == "1" || isCancelledShipment == "1") {
-                                                                          return Colors.red; // Red color for "Cancelled"
-                                                                        } else {
-                                                                          return primary; // Default color
-                                                                        }
-                                                                      })(),
-                                                                    ),
-                                                                    padding: const EdgeInsets.all(7),
-                                                                    child: Text(
-                                                                      (() {
-                                                                        if (isCancelledOrder == "1") {
-                                                                          return getTranslated(context, 'Order Cancelled')!;
-                                                                        } else if (isCancelledShipment == "1" && isCancelledOrder == "0") {
-                                                                          return getTranslated(context, 'Shipment Cancelled')!;
-                                                                        } else if (otoOrderId != ""&& shipmentId == "") {
-                                                                          return getTranslated(context, 'Order Created')!;
-                                                                        }  else if (shipmentId != "") {
-                                                                          return getTranslated(context, 'Shipment created')!;
-                                                                        }
-                                                                        else {
-                                                                          return getTranslated(context, 'Shipment Created')!;
-                                                                        }
-                                                                      })(),
-                                                                      style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white),
-                                                                    ),
-                                                                  ),
-                                                                    shipmentId ==
-                                                                            "" && otoOrderId !=""
-                                                                        ? Padding(
-                                                                            padding:
-                                                                                const EdgeInsetsDirectional.only(start: 10.0),
-                                                                            child: CommonRowBtn(
-                                                                                title: 'Send pickup request',
-                                                                                onBtnSelected: () {
-                                                                                  commonDialogue(context, getTranslated(context, 'Do you want to create shippment?')!, () {
-                                                                                    createOtoShipment();
-
-                                                                                    Routes.pop(context);
-                                                                                  });
-                                                                                }),
-                                                                          )
-                                                                        : const SizedBox
-                                                                            .shrink(),
-                                                                  otoOrderId !=
-                                                                      "" && isCancelledOrder == "0"
-                                                                      ? Padding(
-                                                                    padding: const EdgeInsetsDirectional
-                                                                        .only(
-                                                                        start:
-                                                                            10.0),
-                                                                    child: CommonRowBtn(
-                                                                        title: 'Cancel order',
-                                                                        onBtnSelected: () {
-                                                                          commonDialogue(
-                                                                              context,
-                                                                              getTranslated(context, 'Do you want to cancel order?')!,
-                                                                              () {
-                                                                            cancelOtoOrder();
-
-                                                                            Routes.pop(context);
-                                                                          });
-                                                                        }),
-                                                                  ):SizedBox.shrink(),
-                                                                  shipmentId !=
-                                                                      ""&& isCancelledShipment == "0"
-                                                                      ? Padding(
-                                                                    padding: const EdgeInsetsDirectional
-                                                                        .only(
-                                                                        start:
-                                                                            10.0),
-                                                                    child: CommonRowBtnPng(
-                                                                        title: 'Cancel shipment',
-                                                                        onBtnSelected: () {
-                                                                          print("fhksdn ");
-                                                                          commonDialogue(
-                                                                              context,
-                                                                              getTranslated(context, 'Do you want to cancel shipment?')!,
-                                                                              () {
-                                                                                cancelOtoShipment();
-
-                                                                            Routes.pop(context);
-                                                                          });
-                                                                        }),
-                                                                  ):SizedBox.shrink(),
-                                                                  if (shipmentId !=
-                                                                      ""
-                                                                      )
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .only(
-                                                                          start:
-                                                                              10.0),
-                                                                      child: CommonRowBtnPng(
-                                                                          title: 'Download AWB',
-                                                                          onBtnSelected: () {
-                                                                            // getWafeqOrderInvoice();
-                                                                            downloadAwb();
-                                                                            // downloadInvoice(trackingModel!.shipmentId!);
-                                                                          }),
-                                                                    ),
-                                                                  if (shipmentId !=
-                                                                      ""
-                                                                      )
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .only(
-                                                                          start:
-                                                                              10.0),
-                                                                      child: CommonRowBtnPng(
-                                                                          title: 'Tracking',
-                                                                          onBtnSelected: () {
-                                                                            otoOrderTracking();
-                                                                          }),
-                                                                    ),
-                                                                ]),
-                                                          ),
 
                                                   Padding(
                                                       padding:
@@ -1968,8 +1964,11 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
               context,
             );
             if (!error) {
+              await Future.delayed(const Duration(seconds: 5));
+
               var parameter = {
                 OTO_ORDER_ID: otoOrderId,
+
               };
               ApiBaseHelper().postAPICall(updateOtoshipmentDetails, parameter)
                   .then((onValue)async{
