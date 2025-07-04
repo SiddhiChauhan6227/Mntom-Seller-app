@@ -612,13 +612,13 @@ class _SendOtpState extends State<SendOtp> with TickerProviderStateMixin {
   Widget getLogo() {
     return Container(
       alignment: Alignment.center,
-      padding: const EdgeInsets.only(top: 60),
-      child: SvgPicture.asset(
-        DesignConfiguration.setSvgPath('loginlogo'),
+      padding: const EdgeInsets.only(top: 40),
+      child: Image.asset(
+        DesignConfiguration.setPngPath('loginlogo'),
         alignment: Alignment.center,
-        height: 90,
-        width: 90,
-        fit: BoxFit.contain,
+        height: 120,
+        width: 120,
+        fit: BoxFit.cover,
       ),
     );
   }

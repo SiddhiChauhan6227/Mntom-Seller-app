@@ -19,15 +19,15 @@ const String title = 'Mntom - Seller';
 const String appName = 'Mntom Seller';
 
 //Your package name
-const String packageName = ' com.mntom.seller';
-const String iosPackage = ' com.mntom.seller';
+const String packageName = 'com.mntom.sellermultivendor';
+const String iosPackage = 'com.mntom.seller';
 
 //Set country code
 String defaultCountryCode = 'IN';
 
-const String baseUrl = 'https://taskhub.company/Turkey_Altwani/seller/app/v1/api/';
-const String jwtKey = "8e52d232d1bd7a1af587047e01aaca513032a63a";
-const String chatBaseUrl = 'https://taskhub.company/Turkey_Altwani/seller/app/v1/Chat_Api/';
+const String baseUrl = 'https://mntom.online/seller/app/v1/api/';
+const String jwtKey = "f9cfddeddb63e99009d923b549f9814ad23a66ec";
+const String chatBaseUrl = 'https://mntom.online/seller/app/v1/Chat_Api/';
 
 const double allowableTotalFileSizesInChatMediaInMB = 15.0;
 
