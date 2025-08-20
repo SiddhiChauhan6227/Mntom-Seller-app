@@ -172,7 +172,7 @@ class _SellerRegisterState extends State<SellerRegister>
         request.fields[EmailText] = email!;
         request.fields[ConfirmPassword] = confirmpassword!;
         request.fields[Address] = address!;
-        request.fields[city] = selectedCityId!;
+        request.fields[city] = selectedCityId;
         if (addressProfFile != null) {
           final mimeType = lookupMimeType(addressProfFile.path);
           var extension = mimeType!.split("/");
@@ -467,13 +467,11 @@ class _SellerRegisterState extends State<SellerRegister>
                   bankName(),
                   uploadStoreLogo(getTranslated(context, "Store Logo")!, 1),
                   selectedMainImageShow(storeLogoFile),
-                  uploadStoreLogo(
-                      getTranslated(context, "Commercial register or self-employment document")!, 2),
+                  uploadStoreLogo(getTranslated(context, "Commercial register or self-employment document")!, 2),
                   selectedMainImageShow(nationalIdentityCardFile),
                   uploadStoreLogo(getTranslated(context, "Address Proof")!, 3),
                   selectedMainImageShow(addressProfFile),
-                  uploadStoreLogo(
-                      getTranslated(context, "Authorized Signature")!, 4),
+                  uploadStoreLogo(getTranslated(context, "Authorized Signature")!, 4),
                   selectedMainImageShow(authorizedSignFile),
                   loginBtn(),
                 ],
@@ -657,8 +655,8 @@ class _SellerRegisterState extends State<SellerRegister>
         focusNode: bankCodeFocus,
         textInputAction: TextInputAction.next,
         inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        validator: (val) =>
-            StringValidation.validateThisFieldRequered(val!, context),
+        // validator: (val) =>
+        //     StringValidation.validateThisFieldRequered(val!, context),
         onSaved: (String? value) {
           bankcode = value;
         },
@@ -715,8 +713,8 @@ class _SellerRegisterState extends State<SellerRegister>
         focusNode: bankNameFocus,
         textInputAction: TextInputAction.next,
         inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        validator: (val) =>
-            StringValidation.validateThisFieldRequered(val!, context),
+        // validator: (val) =>
+        //     StringValidation.validateThisFieldRequered(val!, context),
         onSaved: (String? value) {
           bankname = value;
         },
@@ -773,8 +771,8 @@ class _SellerRegisterState extends State<SellerRegister>
         focusNode: panNumberFocus,
         textInputAction: TextInputAction.next,
         inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        validator: (val) =>
-            StringValidation.validateThisFieldRequered(val!, context),
+        // validator: (val) =>
+        //     StringValidation.validateThisFieldRequered(val!, context),
         onSaved: (String? value) {
           pannumber = value;
         },
@@ -832,8 +830,8 @@ class _SellerRegisterState extends State<SellerRegister>
         focusNode: accountNumberFocus,
         textInputAction: TextInputAction.next,
         //inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        validator: (val) =>
-            StringValidation.validateThisFieldRequered(val!, context),
+        // validator: (val) =>
+        //     StringValidation.validateThisFieldRequered(val!, context),
         onSaved: (String? value) {
           accountnumber = value;
         },
@@ -890,8 +888,8 @@ class _SellerRegisterState extends State<SellerRegister>
         focusNode: accountNameFocus,
         textInputAction: TextInputAction.next,
         inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        validator: (val) =>
-            StringValidation.validateThisFieldRequered(val!, context),
+        // validator: (val) =>
+        //     StringValidation.validateThisFieldRequered(val!, context),
         onSaved: (String? value) {
           accountname = value;
         },
@@ -948,8 +946,8 @@ class _SellerRegisterState extends State<SellerRegister>
         focusNode: taxNameFocus,
         textInputAction: TextInputAction.next,
         inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        validator: (val) =>
-            StringValidation.validateThisFieldRequered(val!, context),
+        // validator: (val) =>
+        //     StringValidation.validateThisFieldRequered(val!, context),
         onSaved: (String? value) {
           taxname = value;
         },
@@ -1006,8 +1004,8 @@ class _SellerRegisterState extends State<SellerRegister>
         focusNode: taxNameFocus,
         textInputAction: TextInputAction.next,
         inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        validator: (val) =>
-            StringValidation.validateThisFieldRequered(val!, context),
+        // validator: (val) =>
+        //     StringValidation.validateThisFieldRequered(val!, context),
         onSaved: (String? value) {
           taxnumber = value;
         },
@@ -1064,8 +1062,8 @@ class _SellerRegisterState extends State<SellerRegister>
         focusNode: storeDescriptionFocus,
         textInputAction: TextInputAction.next,
         inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        validator: (val) =>
-            StringValidation.validateThisFieldRequered(val!, context),
+        // validator: (val) =>
+        //     StringValidation.validateThisFieldRequered(val!, context),
         onSaved: (String? value) {
           storedescription = value;
         },
@@ -1331,8 +1329,8 @@ class _SellerRegisterState extends State<SellerRegister>
         focusNode: addressFocus,
         textInputAction: TextInputAction.next,
         inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        validator: (val) =>
-            StringValidation.validateThisFieldRequered(val!, context),
+        // validator: (val) =>
+        //     StringValidation.validateThisFieldRequered(val!, context),
         onSaved: (String? value) {
           address = value;
         },
